@@ -1,0 +1,15 @@
+// Place all the styles related to the home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "bootstrap";
+
+h1 {
+  font-family: 'Dosis';
+  text-align: center;
+  @extend .h1;
+}
+
+h3 {
+  font-family: 'Dosis';
+  @extend .lead;
+}
