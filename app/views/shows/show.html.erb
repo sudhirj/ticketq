@@ -9,20 +9,21 @@
   </div>
 </div>
 <div class="row">
-  <%8.times do |t|%>
-    <div class="col-12 col-md-6 col-lg-4 mb-3"><a class="btn btn-primary text-uppercase w-100" href="#" role="button">FRI / 7 JUNE / 3:00 PM</a></div>
+  <% 8.times do |_| %>
+    <div class="col-12 col-md-6 col-lg-4 mb-3">
+      <a class="btn btn-primary text-uppercase w-100" href="/kuku/company/<%=Time.current.to_formatted_s(:iso8601) %>" role="button">FRI / 7 JUNE / 3:00 PM</a>
+    </div>
   <% end %>
 </div>
-<div class="r"
 <div class="media bg-light rounded p-3 my-3">
-  <img src="https://source.unsplash.com/256x256/?people" class="mr-3 rounded" style="width: 128px;" alt="...">
+  <img src="https://source.unsplash.com/256x256/?man" class="mr-3 rounded" style="width: 128px;" alt="...">
   <div class="media-body">
     <h5 class="mt-0">Sandeep John</h5>
     Egmore
   </div>
 </div>
 <div class="media bg-light rounded p-3 my-3">
-  <img src="https://source.unsplash.com/256x256/?fashion" class="mr-3 rounded" style="width: 128px;" alt="...">
+  <img src="https://source.unsplash.com/256x256/?woman" class="mr-3 rounded" style="width: 128px;" alt="...">
   <div class="media-body">
     <h5 class="mt-0">Sangita Sanotosham</h5>
     Egmore
