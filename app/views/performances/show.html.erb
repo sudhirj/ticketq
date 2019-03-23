@@ -8,8 +8,8 @@
     Egmore
   </div>
 </div>
-<hr/>
-<div class="input-group input-group-lg my-3">
+
+<div class="input-group input-group-lg my-4">
   <div class="input-group-prepend">
     <span class="input-group-text" id="inputGroup-sizing-lg">+91</span>
   </div>
@@ -18,8 +18,10 @@
 
 <% 3.times do |t| %>
   <div class="row">
-    <div class="col-4 text-right">₹<%= (t + 2) * 200 %></div>
-    <div class="col-4">
+    <div class="col-3 text-right pr-0">
+      <button type="button" class="btn btn-light w-100 text-right" disabled>₹<%= (t + 2) * 800 %></button>
+    </div>
+    <div class="col-6">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <button class="btn btn-outline-secondary" type="button">-</button>
@@ -35,7 +37,11 @@
         </div>
       </div>
     </div>
-    <div class="col-4 text-right">₹<%= (t + 2) * 200 %></div>
+    <div class="col-3 text-right pl-0">
+      <button type="button" class="btn btn-outline-dark w-100 text-right" disabled>₹<%= (t + 2) * 800 %></button>
+    </div>
   </div>
 <% end %>
+<button type="button" class="btn btn-success btn-lg w-100 text-uppercase my-2 mb-3">Book</button>
+
 
