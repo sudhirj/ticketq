@@ -58,3 +58,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'bootstrap', '~> 4.3.1'
 gem 'rubocop', group: :development
+gem 'razorpay'
+gem 'dotenv-rails', groups: [:development, :test]
