@@ -1,47 +1,58 @@
 <h4 class="text-right text-muted my-4">The Kuku Company</h4>
 <h1>Company</h1>
 <h5>A Musical Comedy</h5>
-<div class="media bg-light rounded p-3 my-3">
-  <img src="https://source.unsplash.com/256x256/?architecture" class="mr-3 rounded" style="width: 64px;" alt="...">
-  <div class="media-body">
-    <h5 class="mt-0">Museum Theatre - <%= DateTime.parse(params[:datetime]).to_formatted_s(:long) %></h5>
-    Egmore
-  </div>
-</div>
-
-<div class="input-group input-group-lg my-4">
-  <div class="input-group-prepend">
-    <span class="input-group-text" id="inputGroup-sizing-lg">+91</span>
-  </div>
-  <input type="tel" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" maxlength="10" pattern="\d{10}"/>
-</div>
-
-<% 3.times do |t| %>
-  <div class="row">
-    <div class="col-3 text-right pr-0">
-      <button type="button" class="btn btn-light w-100 text-right" disabled>₹<%= (t + 2) * 800 %></button>
-    </div>
-    <div class="col-6">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <button class="btn btn-outline-secondary" type="button">-</button>
-        </div>
-        <select class="custom-select text-center" id="inputGroupSelect03" aria-label="Example select with button addon">
-          <option selected value="0">0</option>
-          <% (1..10).each do |t| %>
-            <option value="<%= t %>"><%= t %></option>
-          <% end %>
-        </select>
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button">+</button>
-        </div>
+<div class="row my-3">
+  <div class="col-12 col-md-6 mb-3">
+    <div class="media bg-light rounded p-3">
+      <img src="https://source.unsplash.com/256x256/?architecture" class="mr-3 rounded" style="width: 64px;" alt="...">
+      <div class="media-body">
+        <h5 class="mt-0">Museum Theatre</h5>
+        Egmore, Chennai
       </div>
     </div>
-    <div class="col-3 text-right pl-0">
-      <button type="button" class="btn btn-outline-dark w-100 text-right" disabled>₹<%= (t + 2) * 800 %></button>
+  </div>
+  <div class="col-12 col-md-6 ">
+    <div class="media bg-light rounded p-3">
+      <img src="https://source.unsplash.com/256x256/?architecture" class="mr-3 rounded" style="width: 64px;" alt="...">
+      <div class="media-body">
+        <h5 class="mt-0"><%= @showtime.strftime('%A, %H:%M %p') %></h5>
+        <%= @showtime.to_date.to_s(:long) %>
+      </div>
     </div>
   </div>
-<% end %>
-<button type="button" class="btn btn-success btn-lg w-100 text-uppercase my-2 mb-3">Book</button>
+</div>
+
+
+<div class="row my-3">
+  <div class="col-12 mb-3">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="inputGroupSelect01">Ticket Type</label>
+      </div>
+      <select class="custom-select text-center" id="inputGroupSelect03" aria-label="Example select with button addon">
+        <option selected value="300">Silver $300</option>
+        <option value="500">Gold $500</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="inputGroupSelect01">Ticket Count</label>
+      </div>
+      <select class="custom-select text-center" id="inputGroupSelect03" aria-label="Example select with button addon">
+        <% (1..10).map do |t| %>
+          <option value="<%= t %>"><%= t %></option>
+        <% end %>
+      </select>
+    </div>
+  </div>
+</div>
+<div class="row my-3">
+  <div class="col-12">
+    <button type="button" class="btn btn-success btn-lg w-100 text-uppercase">Book Tickets</button>
+  </div>
+</div>
+
 
 
