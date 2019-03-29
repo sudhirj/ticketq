@@ -4,7 +4,7 @@
 <hr/>
 <div class="row my-3">
   <div class="col-12 col-md-6 mb-3 mb-md-0">
-    <%= render partial: "media/datetime", locals: {datetime: @showtime} %>
+    <%= render partial: "media/datetime", locals: { datetime: @showtime } %>
   </div>
   <div class="col-12 col-md-6">
     <%= render partial: "media/venue" %>
@@ -17,7 +17,7 @@
       <div class="input-group-prepend">
         <label class="input-group-text" for="tickettype">Which Tickets?</label>
       </div>
-      <select class="custom-select text-center" id="tickettype" aria-label="Ticket type selection">
+      <select id="tickettype" aria-label="Ticket type selection">
         <option selected value="300">Silver ₹300</option>
         <option value="500">Gold ₹500</option>
       </select>
@@ -28,7 +28,7 @@
       <div class="input-group-prepend">
         <label class="input-group-text" for="ticketcount">How Many Tickets?</label>
       </div>
-      <select class="custom-select text-center" id="ticketcount" aria-label="Ticket count selection">
+      <select id="ticketcount" aria-label="Ticket count selection">
         <% (1..10).map do |t| %>
           <option value="<%= t %>"><%= t %></option>
         <% end %>
@@ -41,6 +41,9 @@
     <a class="btn btn-success btn-lg w-100 text-uppercase" href="https://rzp.io/i/LNeeYD2">Book Tickets</a>
   </div>
 </div>
-<p class="text-center"><small>Your ticket will be sent to the email address and mobile number that you provide when making the payment.</small></p>
+<p class="text-center text-muted">
+  <small>Your ticket will be sent to the email address and mobile number that you provide when making the payment.
+  </small>
+</p>
 
 

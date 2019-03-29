@@ -1,9 +1,28 @@
-
 @import "bootstrap";
 
 body {
   font-family: 'Roboto', sans-serif;
 }
-h1.main{
+
+h1.main {
   font-family: 'Righteous', cursive;
+}
+
+hr {
+  height: 0;
+  border: 0;
+  border-top: 1px solid #eee;
+  opacity: 0.9;
+  @extend .my-3;
+}
+
+select {
+  @extend .custom-select;
+  @extend .text-center;
+}
+
+.media {
+  @extend .bg-light;
+  @extend .rounded;
+  @extend .p-3;
 }
