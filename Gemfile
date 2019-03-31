@@ -59,5 +59,6 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'bootstrap', '~> 4.3.1'
 gem 'dotenv-rails', groups: %i[development test]
-gem 'razorpay'
+gem 'httparty'
 gem 'rubocop', group: :development
+gem 'shortuuid'
