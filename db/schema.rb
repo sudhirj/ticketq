@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2019_03_30_183434) do
   create_table "allocations", force: :cascade do |t|
     t.jsonb "data", default: {}, null: false
     t.uuid "denomination_id", null: false
-    t.integer "count", default: 0, null: false
+    t.integer "count", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["denomination_id"], name: "index_allocations_on_denomination_id"
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 2019_03_30_183434) do
     t.jsonb "data", default: {}, null: false
     t.jsonb "rp_data", default: {}, null: false
     t.uuid "denomination_id", null: false
-    t.integer "count", default: 0, null: false
+    t.integer "count", null: false
     t.boolean "confirmed", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
