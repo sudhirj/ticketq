@@ -5,5 +5,5 @@ class Denomination < ApplicationRecord
   has_many :allocations
   has_many :bookings
 
-
+  data_accessors :name
 end
