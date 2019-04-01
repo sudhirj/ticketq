@@ -15,20 +15,44 @@ class Booking < ApplicationRecord
   def ensure_rp_invoice
     resp = HTTParty.post('https://api.razorpay.com/v1/invoices',
                          body: {
-                           type: 'link',
-                           amount: count * denomination.price * 100,
-                           currency: 'INR',
-                           description: "Test description\nWith multi lines. \nSo Haiku",
+                           type: 'invoice',
+                           "line_items": [
+                             amount: denomination.price * 100,
+                             name: 'Ticket',
+                             currency: 'INR',
+                             quantity: count
+                           ],
+                           customer: {
+                             name: 'Sudhir',
+                             email: 'sudhir.j@gmail.com',
+                             contact: '9789063705'
+                           },
+                           description: description,
                            receipt: receipt_id,
-                           terms: "The rain in spain falls mainly\nIn the plain",
-                           expire_by: 15.minutes.from_now.to_i
-                         },
+                           terms: terms,
+                           expire_by: 20.minutes.from_now.to_i
+                         }.to_json,
                          headers: rp_headers,
                          basic_auth: rp_auth)
+    pp resp.request
+    pp resp
     return if resp.code != 200
 
     self.rp_data = resp.parsed_response
     save!
+  end
+
+  def terms
+    %(
+Please pick up your tickets at the counter 30 minutes before the show.
+You can present the paid copy of this invoice to claim your tickets - an email and SMS will be sent to you on payment.
+    )
+  end
+
+  def description
+    %(
+Tickets for the show.
+    )
   end
 
   def refresh
@@ -54,6 +78,6 @@ class Booking < ApplicationRecord
   end
 
   def rp_headers
-    {}
+    { "Content-Type": 'application/json' }
   end
 end

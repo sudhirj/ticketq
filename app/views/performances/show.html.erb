@@ -15,7 +15,7 @@
   <div class="col-12 mb-3">
     <div class="input-group input-group-lg">
       <div class="input-group-prepend">
-        <label class="input-group-text" for="tickettype">Which Tickets?</label>
+        <label class="input-group-text" for="tickettype">Ticket Type:</label>
       </div>
       <select id="tickettype" aria-label="Ticket type selection">
         <option selected value="300">Silver ₹300</option>
@@ -23,16 +23,40 @@
       </select>
     </div>
   </div>
-  <div class="col-12">
+  <div class="col-12 mb-3">
     <div class="input-group input-group-lg">
       <div class="input-group-prepend">
-        <label class="input-group-text" for="ticketcount">How Many Tickets?</label>
+        <label class="input-group-text" for="ticketcount">Ticket Count:</label>
       </div>
       <select id="ticketcount" aria-label="Ticket count selection">
         <% (1..10).map do |t| %>
           <option value="<%= t %>"><%= t %></option>
         <% end %>
       </select>
+    </div>
+  </div>
+  <div class="col-12 mb-3">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="name">Your Name:</label>
+      </div>
+      <input type="text" class="form-control"/>
+    </div>
+  </div>
+  <div class="col-12 mb-3">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="name">Email Address:</label>
+      </div>
+      <input type="textlkjkjjk" class="form-control"/>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="name">Mobile Number:</label>
+      </div>
+      <input type="tel" class="form-control" maxlength="10" required/>
     </div>
   </div>
 </div>

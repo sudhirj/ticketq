@@ -7,9 +7,9 @@
         <circle cx="<%= t.first %>" cy="<%= t.last %>" r="14"/>
       <% end %>
     </g>
-    <text id="month" x="32" y="164" fill="#fff" font-family="monospace" font-size="140px" style="text-anchor: start"><%= datetime.strftime('%^b') %></text>
-    <text id="day" x="256" y="370" fill="#666" font-family="monospace" font-size="200px" style="text-anchor: middle"><%= datetime.strftime('%d') %></text>
-    <text id="weekday" x="256" y="470" fill="#333" font-family="monospace" font-size="80px" style="text-anchor: middle"><%= datetime.strftime('%^a') %></text>
+    <text id="month" x="32" y="164" fill="#fff" font-size="140px" style="text-anchor: start"><%= datetime.strftime('%^b') %></text>
+    <text id="day" x="256" y="360" fill="#666" font-size="180px" style="text-anchor: middle"><%= datetime.strftime('%d') %></text>
+    <text id="weekday" x="256" y="470" fill="#333" font-size="80px" style="text-anchor: middle"><%= datetime.strftime('%^a') %></text>
   </svg>
 
   <div class="media-body">
