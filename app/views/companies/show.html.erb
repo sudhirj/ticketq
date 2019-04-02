@@ -1,6 +1,6 @@
 <h1 class="display-5 my-4"><%= @company.name %></h1>
 <div class="row">
-  <% @performance_groups.each do |key, values| %>
+  <% @performance_groups.each do |key, performances| %>
     <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
       <div class="card mb-4">
         <!--        <img src="https://source.unsplash.com/random" class="card-img-top" alt="...">-->
@@ -13,7 +13,7 @@
         <ul class="list-group list-group-flush">
           <li class="list-group-item"><span class="font-weight-bold"><%= key.venue.name %></span>&nbsp;<small class="text-muted"><%= key.venue.area %></small>
           </li>
-          <% values.each do |performance| %>
+          <% performances.sort_by(&:showtime).each do |performance| %>
             <li class="list-group-item"><%= performance.showtime.to_s(:long) %></li>
           <% end %>
         </ul>
