@@ -1,13 +1,13 @@
-<h4 class="text-right text-muted my-4">The Kuku Company</h4>
-<h1>Company</h1>
-<h5>A Musical Comedy</h5>
+<h4 class="text-right text-muted my-4"><%= @company.name %></h4>
+<h1><%= @show.name %></h1>
+<h5><%= @show.tagline %></h5>
 <hr/>
 <div class="row my-3">
   <div class="col-12 col-md-6 mb-3 mb-md-0">
-    <%= render partial: "media/datetime", locals: { datetime: @showtime } %>
+    <%= render partial: "media/datetime", locals: { datetime: @performance.showtime } %>
   </div>
   <div class="col-12 col-md-6">
-    <%= render partial: "media/venue" %>
+    <%= render partial: "media/venue", locals: { venue: @performance.venue } %>
   </div>
 </div>
 
@@ -18,8 +18,9 @@
         <label class="input-group-text" for="tickettype">Ticket Type:</label>
       </div>
       <select id="tickettype" aria-label="Ticket type selection">
-        <option selected value="300">Silver ₹300</option>
-        <option value="500">Gold ₹500</option>
+        <% @performance.denominations.each do |denom| %>
+          <option value="<%= denom.price %>">₹<%= denom.price %></option>
+        <% end %>
       </select>
     </div>
   </div>

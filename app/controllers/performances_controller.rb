@@ -1,5 +1,7 @@
 class PerformancesController < ApplicationController
   def show
-    @showtime = DateTime.parse(params[:datetime])
+    @company = Company.find_by! slug: params[:company_slug]
+    @show = @company.shows.find_by! slug: params[:show_slug]
+    @performance = @show.performances.find_by! showtime: DateTime.parse(params[:datetime]).beginning_of_minute
   end
 end

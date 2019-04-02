@@ -1,20 +1,23 @@
-<h4 class="text-right text-muted my-4">The Kuku Company</h4>
-<h1>Company</h1>
-<h5>A Musical Comedy</h5>
-<div class="media bg-light rounded p-3 my-3">
-  <img src="https://source.unsplash.com/256x256/?architecture" class="mr-3 rounded" style="width: 64px;" alt="...">
-  <div class="media-body">
-    <h5 class="mt-0">Museum Theatre</h5>
-    Egmore, Chennai
-  </div>
-</div>
-<div class="row no-gutters mx-n2">
-  <% 5.times do |_| %>
-    <div class="col-12 col-md-6 col-lg-4 mb-3 px-2">
-      <a class="btn btn-primary text-uppercase w-100" href="/kuku/company/<%=Time.current.to_formatted_s(:iso8601) %>" role="button">FRI / 7 JUNE / 3:00 PM</a>
+<h4 class="text-right text-muted my-4"><%= @company.name %></h4>
+<h1><%= @show.name %></h1>
+<h5><%= @show.tagline %></h5>
+<% @venue_groups.each do |venue, performances| %>
+  <div class="media bg-light rounded p-3 my-3">
+    <img src="https://source.unsplash.com/256x256/?architecture" class="mr-3 rounded" style="width: 64px;" alt="...">
+    <div class="media-body">
+      <h5 class="mt-0 mb-3"><%= venue.name %>&nbsp;<small class="text-muted"><%= venue.area %></small>
+      </h5>
+      <div class="row no-gutters mx-n2 mb-n2">
+        <% performances.each do |performance| %>
+          <div class="col-12 col-md-6 col-lg-4 mb-3 px-2">
+            <a class="btn btn-primary text-uppercase w-100" href="<%= performance_link_path @company.slug, @show.slug, performance.showtime.to_formatted_s(:iso8601) %>" role="button"><%= ['%^a', '%d %^b', '%I:%M %p'].map { |f| performance.showtime.strftime(f) }.join(' / ') %></a>
+          </div>
+        <% end %>
+      </div>
     </div>
-  <% end %>
-</div>
+  </div>
+<% end %>
+
 <div class="row no-gutters mx-n2">
   <figure class="col-4 col-md-2 figure px-2">
     <img src="https://source.unsplash.com/256x256/?man" class="figure-img img-fluid rounded w-100" alt="...">
