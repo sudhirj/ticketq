@@ -3,19 +3,23 @@
   <% @performance_groups.each do |key, values| %>
     <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
       <div class="card mb-4">
-<!--        <img src="https://source.unsplash.com/random" class="card-img-top" alt="...">-->
+        <!--        <img src="https://source.unsplash.com/random" class="card-img-top" alt="...">-->
         <div class="card-body">
           <h3 class="card-title"><%= key.show.name %></h3>
           <p class="lead"><%= key.show.tagline %></p>
-<!--          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's-->
-<!--            content.</p>-->
+          <!--          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's-->
+          <!--            content.</p>-->
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item"><span class="font-weight-bold">Museum Theatre</span>&nbsp;<small class="text-muted">Egmore</small></li>
-          <li class="list-group-item">7th - 9th June</li>
+          <li class="list-group-item"><span class="font-weight-bold"><%= key.venue.name %></span>&nbsp;<small class="text-muted"><%= key.venue.area %></small>
+          </li>
+          <% values.each do |performance| %>
+            <li class="list-group-item"><%= performance.showtime.to_s(:long) %></li>
+          <% end %>
         </ul>
         <div class="card-body">
-          <a href="<%= show_link_path(@company.slug, key.show.slug) %>" class="btn btn-primary text-uppercase w-100 stretched-link">Book Tickets</a>
+          <a href="<%= show_link_path(@company.slug, key.show.slug) %>" class="btn btn-primary text-uppercase w-100 stretched-link">Book
+            Tickets</a>
         </div>
       </div>
     </div>
