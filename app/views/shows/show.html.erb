@@ -1,4 +1,4 @@
-<h4 class="text-right text-muted my-4"><a href="<%=company_link_path @company.slug %>"><%= @company.name %></a></h4>
+<h4 class="text-right text-muted my-4"><a href="<%= company_link_path @company.slug %>"><%= @company.name %></a></h4>
 <h1><a href="<%= show_link_path @company.slug, @show.slug %>"><%= @show.name %></a></h1>
 <h5><%= @show.tagline %></h5>
 <% @venue_groups.each do |venue, performances| %>
@@ -7,13 +7,19 @@
     <div class="media-body">
       <h5 class="mt-0 mb-3"><%= venue.name %>&nbsp;<small class="text-muted"><%= venue.area %></small>
       </h5>
-      <div class="row no-gutters mx-n2 mb-n2">
-        <% performances.sort_by(&:showtime).each do |performance| %>
-          <div class="col-12 col-md-6 col-lg-4 mb-3 px-2">
-            <a class="btn btn-primary text-uppercase w-100" href="<%= performance_link_path @company.slug, @show.slug, performance.showtime.to_formatted_s(:iso8601) %>" role="button"><%= performance.showtime.strftime('%^a / %d %^b / %I:%M %p')  %></a>
+      <% performances.sort_by(&:showtime).group_by { |p| p.showtime.to_date }.each do |date, performances| %>
+        <div class="row no-gutters mx-n2 my-3 mb-n2">
+          <div class="col-12 px-2 my-0">
+            <h6 class="mb-1 border-top pt-3"><%= date.strftime('%A').upcase %>&nbsp;/&nbsp;<%= date.strftime("#{date.day.ordinalize} %B %Y") %></h6>
           </div>
-        <% end %>
-      </div>
+          <% performances.each do |performance| %>
+            <div class="col-6 col-md-4 my-2 px-2">
+              <a class="btn btn-primary text-uppercase w-100" href="<%= performance_link_path @company.slug, @show.slug, performance.showtime.to_formatted_s(:iso8601) %>" role="button"><%= performance.showtime.strftime('%I:%M %p') %></a>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+
     </div>
   </div>
 <% end %>

@@ -1,7 +1,6 @@
-<h4 class="text-right text-muted my-4"><%= @company.name %></h4>
-<h1><%= @show.name %></h1>
+<h4 class="text-right text-muted my-4"><a href="<%= company_link_path @company.slug %>"><%= @company.name %></a></h4>
+<h1><a href="<%= show_link_path @company.slug, @show.slug %>"><%= @show.name %></a></h1>
 <h5><%= @show.tagline %></h5>
-<hr/>
 <div class="row my-3">
   <div class="col-12 col-md-6 mb-3 mb-md-0">
     <%= render partial: "media/datetime", locals: { datetime: @performance.showtime } %>
@@ -10,33 +9,28 @@
     <%= render partial: "media/venue", locals: { venue: @performance.venue } %>
   </div>
 </div>
-
-<div class="row my-3">
-  <div class="col-12 mb-3">
-    <div class="input-group input-group-lg">
-      <div class="input-group-prepend">
-        <label class="input-group-text" for="tickettype">Ticket Type:</label>
+<div class="my-5">
+  <h5>How many tickets would you like?</h5>
+  <% @performance.denominations.sort_by(&:price).each do |denom| %>
+    <div class="row shadow-sm my-3 no-gutters py-2 rounded bg-gradient-light">
+      <div class="col-4 text-right px-2">
+        <button class="btn btn-light text-dark font-weight-bold w-100 text-right" disabled>₹<%= denom.price %></button>
       </div>
-      <select id="tickettype" aria-label="Ticket type selection">
-        <% @performance.denominations.each do |denom| %>
-          <option value="<%= denom.price %>">₹<%= denom.price %></option>
-        <% end %>
-      </select>
-    </div>
-  </div>
-  <div class="col-12 mb-3">
-    <div class="input-group input-group-lg">
-      <div class="input-group-prepend">
-        <label class="input-group-text" for="ticketcount">Ticket Count:</label>
+      <div class="col-3 px-2">
+        <select id="ticketcount" aria-label="Ticket count selection">
+          <% (0..10).map do |t| %>
+            <option value="<%= t %>"><%= t %></option>
+          <% end %>
+        </select>
       </div>
-      <select id="ticketcount" aria-label="Ticket count selection">
-        <% (1..10).map do |t| %>
-          <option value="<%= t %>"><%= t %></option>
-        <% end %>
-      </select>
+      <div class="col-5 px-2">
+        <button class="btn btn-light w-100 text-left" disabled> <%= denom.name %></button>
+      </div>
     </div>
-  </div>
-  <div class="col-12 mb-3">
+  <% end %>
+</div>
+<div class="row my-5">
+  <div class="col-12 my-2">
     <div class="input-group">
       <div class="input-group-prepend">
         <label class="input-group-text" for="name">Name:</label>
@@ -44,7 +38,7 @@
       <input type="text" class="form-control text-center" id="name"/>
     </div>
   </div>
-  <div class="col-12 mb-3">
+  <div class="col-12 my-2">
     <div class="input-group">
       <div class="input-group-prepend">
         <label class="input-group-text" for="email">Email Address:</label>
@@ -52,7 +46,7 @@
       <input type="email" class="form-control text-center" id="email"/>
     </div>
   </div>
-  <div class="col-12">
+  <div class="col-12 my-2">
     <div class="input-group">
       <div class="input-group-prepend">
         <label class="input-group-text" for="mobile">Mobile Number:</label>
@@ -62,7 +56,7 @@
   </div>
 </div>
 <div class="row my-3">
-  <div class="col-12">
+  <div class="col-12 my-2">
     <a class="btn btn-success btn-lg w-100 text-uppercase" href="https://rzp.io/i/LNeeYD2">Book Tickets</a>
   </div>
 </div>

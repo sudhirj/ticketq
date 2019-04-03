@@ -1,4 +1,14 @@
+$enable-responsive-font-sizes: true;
+$enable-gradients: true;
 @import "bootstrap";
+
+body {
+  font-variant-numeric: ordinal;
+}
+
+.btn {
+  //font-variant-numeric: tabular-nums;
+}
 
 hr {
   height: 0;
