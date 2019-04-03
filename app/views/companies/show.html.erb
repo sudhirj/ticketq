@@ -1,4 +1,4 @@
-<h1 class="display-5 my-4"><%= @company.name %></h1>
+<h1 class="display-5 my-4"><a href="<%=company_link_path @company.slug %>"><%= @company.name %></a></h1>
 <div class="row">
   <% @performance_groups.each do |key, performances| %>
     <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
@@ -14,7 +14,7 @@
           <li class="list-group-item"><span class="font-weight-bold"><%= key.venue.name %></span>&nbsp;<small class="text-muted"><%= key.venue.area %></small>
           </li>
           <% performances.sort_by(&:showtime).each do |performance| %>
-            <li class="list-group-item"><%= performance.showtime.to_s(:long) %></li>
+            <li class="list-group-item"><%= performance.showtime.strftime('%^a / %d %^b / %I:%M %p') %></li>
           <% end %>
         </ul>
         <div class="card-body">

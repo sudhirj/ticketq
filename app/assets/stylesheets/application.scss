@@ -19,6 +19,9 @@ select {
   @extend .p-3;
 }
 
-h1 a {
-  color: inherit;
+h1, h4 {
+  a {
+    color: inherit;
+  }
+
 }

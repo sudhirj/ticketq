@@ -1,5 +1,5 @@
-<h4 class="text-right text-muted my-4"><%= @company.name %></h4>
-<h1><%= @show.name %></h1>
+<h4 class="text-right text-muted my-4"><a href="<%=company_link_path @company.slug %>"><%= @company.name %></a></h4>
+<h1><a href="<%= show_link_path @company.slug, @show.slug %>"><%= @show.name %></a></h1>
 <h5><%= @show.tagline %></h5>
 <% @venue_groups.each do |venue, performances| %>
   <div class="media bg-light rounded p-3 my-3">
@@ -8,9 +8,9 @@
       <h5 class="mt-0 mb-3"><%= venue.name %>&nbsp;<small class="text-muted"><%= venue.area %></small>
       </h5>
       <div class="row no-gutters mx-n2 mb-n2">
-        <% performances.each do |performance| %>
+        <% performances.sort_by(&:showtime).each do |performance| %>
           <div class="col-12 col-md-6 col-lg-4 mb-3 px-2">
-            <a class="btn btn-primary text-uppercase w-100" href="<%= performance_link_path @company.slug, @show.slug, performance.showtime.to_formatted_s(:iso8601) %>" role="button"><%= ['%^a', '%d %^b', '%I:%M %p'].map { |f| performance.showtime.strftime(f) }.join(' / ') %></a>
+            <a class="btn btn-primary text-uppercase w-100" href="<%= performance_link_path @company.slug, @show.slug, performance.showtime.to_formatted_s(:iso8601) %>" role="button"><%= performance.showtime.strftime('%^a / %d %^b / %I:%M %p')  %></a>
           </div>
         <% end %>
       </div>
