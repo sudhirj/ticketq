@@ -14,7 +14,7 @@
           </div>
           <% performances.each do |performance| %>
             <div class="col-6 col-md-4 my-2 px-2">
-              <a class="btn btn-primary text-uppercase w-100" href="<%= performance_link_path @company.slug, @show.slug, performance.showtime.to_formatted_s(:iso8601) %>" role="button"><%= performance.showtime.strftime('%I:%M %p') %></a>
+              <a class="btn btn-primary text-uppercase w-100" href="<%= performance_link_path @company.slug, @show.slug, performance.venue.slug, performance.showtime.to_formatted_s(:iso8601) %>" role="button"><%= performance.showtime.strftime('%I:%M %p') %></a>
             </div>
           <% end %>
         </div>

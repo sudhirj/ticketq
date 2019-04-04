@@ -9,57 +9,62 @@
     <%= render partial: "media/venue", locals: { venue: @performance.venue } %>
   </div>
 </div>
-<div class="my-5">
-  <h5>How many tickets would you like?</h5>
-  <% @performance.denominations.sort_by(&:price).each do |denom| %>
-    <div class="row shadow-sm my-3 no-gutters py-2 rounded bg-gradient-light">
-      <div class="col-4 text-right px-2">
-        <button class="btn btn-light text-dark font-weight-bold w-100 text-right" disabled>₹<%= denom.price %></button>
+<%= form_tag booking_link_path do |f| %>
+  <div class="my-4">
+    <h6>How many tickets would you like?</h6>
+    <div class="row shadow-sm no-gutters py-2 rounded bg-gradient-light">
+      <div class="col-6 px-2">
+        <select name="denomination_id" class="form-control-lg" id="ticketcount" aria-label="Ticket count selection">
+          <% @performance.denominations.sort_by(&:price).each do |denom| %>
+            <option value="<%= denom.id %>">₹<%= denom.price%> - <%= denom.name%></option>
+          <% end %>
+        </select>
       </div>
-      <div class="col-3 px-2">
-        <select id="ticketcount" aria-label="Ticket count selection">
-          <% (0..10).map do |t| %>
+      <div class="col-2 px-0">
+        <button disabled class="btn btn-light btn-lg w-100 text-center">X</button>
+      </div>
+      <div class="col-4 px-2">
+        <select name="count" class="form-control-lg" id="ticketcount" aria-label="Ticket count selection">
+          <% (1..10).map do |t| %>
             <option value="<%= t %>"><%= t %></option>
           <% end %>
         </select>
       </div>
-      <div class="col-5 px-2">
-        <button class="btn btn-light w-100 text-left" disabled> <%= denom.name %></button>
+    </div>
+
+  </div>
+  <div class="row my-3">
+    <div class="col-12 my-2">
+      <div class="input-group input-group-lg">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="name">Name:</label>
+        </div>
+        <input type="text" class="form-control text-center" id="name" name="name" required/>
       </div>
     </div>
-  <% end %>
-</div>
-<div class="row my-5">
-  <div class="col-12 my-2">
-    <div class="input-group">
-      <div class="input-group-prepend">
-        <label class="input-group-text" for="name">Name:</label>
+    <div class="col-12 my-2">
+      <div class="input-group input-group-lg">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="email">Email Address:</label>
+        </div>
+        <input type="email" name="email" class="form-control text-center" required id="email"/>
       </div>
-      <input type="text" class="form-control text-center" id="name"/>
+    </div>
+    <div class="col-12 my-2">
+      <div class="input-group input-group-lg">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="mobile">Mobile Number:</label>
+        </div>
+        <input type="tel" class="form-control text-center" name="mobile" maxlength="10" required id="mobile"/>
+      </div>
     </div>
   </div>
-  <div class="col-12 my-2">
-    <div class="input-group">
-      <div class="input-group-prepend">
-        <label class="input-group-text" for="email">Email Address:</label>
-      </div>
-      <input type="email" class="form-control text-center" id="email"/>
+  <div class="row my-3">
+    <div class="col-12">
+      <button class="btn btn-success btn-lg w-100 text-uppercase" type="submit">Book Tickets</button>
     </div>
   </div>
-  <div class="col-12 my-2">
-    <div class="input-group">
-      <div class="input-group-prepend">
-        <label class="input-group-text" for="mobile">Mobile Number:</label>
-      </div>
-      <input type="tel" class="form-control text-center" maxlength="10" required id="mobile"/>
-    </div>
-  </div>
-</div>
-<div class="row my-3">
-  <div class="col-12 my-2">
-    <a class="btn btn-success btn-lg w-100 text-uppercase" href="https://rzp.io/i/LNeeYD2">Book Tickets</a>
-  </div>
-</div>
+<% end %>
 <p class="text-center text-muted">
   <small>Your ticket will be sent to the email address and mobile number that you provide.
   </small>
