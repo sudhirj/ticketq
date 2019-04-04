@@ -10,29 +10,37 @@
   </div>
 </div>
 <%= form_tag booking_link_path do |f| %>
-  <div class="my-4">
-    <h6>How many tickets would you like?</h6>
-    <div class="row shadow-sm no-gutters py-2 rounded bg-gradient-light">
-      <div class="col-6 px-2">
-        <select name="denomination_id" id="ticketcount" aria-label="Ticket count selection">
-          <% @performance.denominations.sort_by(&:price).each do |denom| %>
-            <option value="<%= denom.id %>">₹<%= denom.price%> - <%= denom.name%></option>
-          <% end %>
-        </select>
+  <div class="row my-3">
+    <% @performance.denominations.sort_by(&:price).reverse.each_with_index do |denom, i| %>
+      <div class="col-12 col-sm-6 my-2">
+        <div class="" style="cursor: pointer;">
+          <input type="radio" id="<%= denom.id %>" name="denom"
+                 <% if i == 0 %>checked
+                 <% end %>  class="special" value="<%= denom.id %>">
+          <label class="special" for="<%= denom.id %>"><%= denom.name %>
+            <span class="float-right">₹<%= denom.price %></span></label>
+        </div>
       </div>
-      <div class="col-2 px-0">
-        <button disabled class="btn btn-light w-100 text-center">X</button>
-      </div>
-      <div class="col-4 px-2">
-        <select name="count" id="ticketcount" aria-label="Ticket count selection">
+    <% end %>
+
+  </div>
+
+  <div class="row my-3">
+    <div class="col-12">
+      <div class="input-group input-group-lg">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="count">Ticket Count:</label>
+        </div>
+        <select name="count" id="count" aria-label="Ticket count selection">
           <% (1..10).map do |t| %>
             <option value="<%= t %>"><%= t %></option>
           <% end %>
         </select>
       </div>
-    </div>
 
+    </div>
   </div>
+
   <div class="row my-3">
     <div class="col-12 my-2">
       <div class="input-group">
