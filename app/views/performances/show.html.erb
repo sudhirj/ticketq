@@ -14,17 +14,17 @@
     <h6>How many tickets would you like?</h6>
     <div class="row shadow-sm no-gutters py-2 rounded bg-gradient-light">
       <div class="col-6 px-2">
-        <select name="denomination_id" class="form-control-lg" id="ticketcount" aria-label="Ticket count selection">
+        <select name="denomination_id" id="ticketcount" aria-label="Ticket count selection">
           <% @performance.denominations.sort_by(&:price).each do |denom| %>
             <option value="<%= denom.id %>">₹<%= denom.price%> - <%= denom.name%></option>
           <% end %>
         </select>
       </div>
       <div class="col-2 px-0">
-        <button disabled class="btn btn-light btn-lg w-100 text-center">X</button>
+        <button disabled class="btn btn-light w-100 text-center">X</button>
       </div>
       <div class="col-4 px-2">
-        <select name="count" class="form-control-lg" id="ticketcount" aria-label="Ticket count selection">
+        <select name="count" id="ticketcount" aria-label="Ticket count selection">
           <% (1..10).map do |t| %>
             <option value="<%= t %>"><%= t %></option>
           <% end %>
@@ -35,7 +35,7 @@
   </div>
   <div class="row my-3">
     <div class="col-12 my-2">
-      <div class="input-group input-group-lg">
+      <div class="input-group">
         <div class="input-group-prepend">
           <label class="input-group-text" for="name">Name:</label>
         </div>
@@ -43,7 +43,7 @@
       </div>
     </div>
     <div class="col-12 my-2">
-      <div class="input-group input-group-lg">
+      <div class="input-group">
         <div class="input-group-prepend">
           <label class="input-group-text" for="email">Email Address:</label>
         </div>
@@ -51,7 +51,7 @@
       </div>
     </div>
     <div class="col-12 my-2">
-      <div class="input-group input-group-lg">
+      <div class="input-group">
         <div class="input-group-prepend">
           <label class="input-group-text" for="mobile">Mobile Number:</label>
         </div>
