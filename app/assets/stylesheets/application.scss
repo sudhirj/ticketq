@@ -38,20 +38,18 @@ h1, h4 {
 
 label.special {
   cursor: pointer;
-  @extend .bg-light;
+  @extend .bg-gradient-light;
   @extend .shadow-sm;
   @extend .rounded;
   @extend .d-block;
   @extend .p-3;
   @extend .mb-0;
   @extend .border;
-  @extend .text-dark;
-  font-weight: 500;
-
+  @extend .text-muted;
 }
 
 input:checked + label.special {
-  @extend .bg-primary;
+  @extend .bg-gradient-primary;
   @extend .text-white;
   @extend .shadow;
   @extend .border-primary;
