@@ -3,8 +3,8 @@
 class Booking < ApplicationRecord
   RECEIPT_ALPHABET = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'
   belongs_to :denomination
-  scope :confirmed, -> {where(confirmed: true)}
-  scope :blocked, -> {where(confirmed: false, active: true)}
+  scope :confirmed, -> { where(confirmed: true) }
+  scope :blocked, -> { where(confirmed: false, active: true) }
 
   data_accessors :name, :mobile, :email
 
@@ -18,27 +18,26 @@ class Booking < ApplicationRecord
   def ensure_rp_invoice
     resp = HTTParty.post('https://api.razorpay.com/v1/invoices',
                          body: {
-                             type: 'invoice',
-                             "line_items": [
-                                 amount: denomination.price * 100,
-                                 name: denomination.name,
-                                 currency: 'INR',
-                                 quantity: count
-                             ],
-                             customer: {
-                                 name: name,
-                                 email: email,
-                                 contact: mobile
-                             },
-                             description: description,
-                             receipt: receipt_id,
-                             terms: terms,
-                             expire_by: 30.minutes.from_now.to_i
+                           type: 'invoice',
+                           line_items: [
+                             amount: denomination.price * 100,
+                             name: denomination.name,
+                             currency: 'INR',
+                             quantity: count
+                           ],
+                           customer: {
+                             name: name,
+                             email: email,
+                             contact: mobile
+                           },
+                           description: description,
+                           receipt: receipt_id,
+                           terms: terms,
+                           expire_by: 30.minutes.from_now.to_i
                          }.to_json,
                          headers: rp_headers,
                          basic_auth: rp_auth)
-    pp resp.request
-    pp resp
+
     return if resp.code != 200
 
     self.rp_data = resp.parsed_response
@@ -58,7 +57,7 @@ class Booking < ApplicationRecord
   def refresh
     resp = HTTParty.get('https://api.razorpay.com/v1/invoices',
                         query: {
-                            receipt: receipt_id
+                          receipt: receipt_id
                         },
                         headers: rp_headers,
                         basic_auth: rp_auth)
@@ -78,17 +77,16 @@ class Booking < ApplicationRecord
     ShortUUID.convert_decimal_to_alphabet yymmddhhmm, RECEIPT_ALPHABET.chars
   end
 
-
   def short_id
     ShortUUID.shorten id, RECEIPT_ALPHABET.chars
   end
 
   def rp_auth
-    {username: 'rzp_test_gn9vzTBHdzvvBt', password: 'IDWBzrnB3LxEBfGkm1EjhASw'}
+    { username: 'rzp_test_gn9vzTBHdzvvBt', password: 'IDWBzrnB3LxEBfGkm1EjhASw' }
   end
 
   def rp_headers
-    {"Content-Type": 'application/json'}
+    { "Content-Type": 'application/json' }
   end
 
   def url
