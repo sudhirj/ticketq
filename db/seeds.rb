@@ -19,14 +19,28 @@ company.update_attributes! name: 'Company', tagline: 'A Musical Comedy'
 lesmis = kuku.shows.create_or_find_by! slug: 'lesmis'
 lesmis.update_attributes! name: 'Lés Miserables', tagline: 'The GLUMS!'
 
+Booking.delete_all
+Allocation.delete_all
+Denomination.delete_all
 Performance.delete_all
-company.performances.create! venue: museum, showtime: rand(100..10000).minutes.from_now
-company.performances.create! venue: academy, showtime: rand(100..10000).minutes.from_now
-company.performances.create! venue: museum, showtime: rand(100..10000).minutes.from_now
-company.performances.create! venue: museum, showtime: rand(100..10000).minutes.from_now
-lesmis.performances.create! venue: academy, showtime: rand(100..10000).minutes.from_now
-lesmis.performances.create! venue: academy, showtime: rand(100..10000).minutes.from_now
-lesmis.performances.create! venue: academy, showtime: rand(100..10000).minutes.from_now
-lesmis.performances.create! venue: academy, showtime: rand(100..10000).minutes.from_now
-lesmis.performances.create! venue: academy, showtime: rand(100..10000).minutes.from_now
 
+perfs = []
+perfs << company.performances.create!(venue: museum, showtime: rand(100..10000).minutes.from_now)
+perfs << company.performances.create!(venue: academy, showtime: rand(100..10000).minutes.from_now)
+perfs << company.performances.create!(venue: museum, showtime: rand(100..10000).minutes.from_now)
+perfs << company.performances.create!(venue: museum, showtime: rand(100..10000).minutes.from_now)
+perfs << lesmis.performances.create!(venue: academy, showtime: rand(100..10000).minutes.from_now)
+perfs << lesmis.performances.create!(venue: academy, showtime: rand(100..10000).minutes.from_now)
+perfs << lesmis.performances.create!(venue: academy, showtime: rand(100..10000).minutes.from_now)
+perfs << lesmis.performances.create!(venue: academy, showtime: rand(100..10000).minutes.from_now)
+perfs << lesmis.performances.create!(venue: academy, showtime: rand(100..10000).minutes.from_now)
+
+perfs.each do |perf|
+  denoms = []
+  denoms << perf.denominations.create!(price: [300, 500].sample, name: 'Gold')
+  denoms << perf.denominations.create!(price: [1500, 2500, 1000].sample, name: 'Platinum')
+  denoms << perf.denominations.create!(price: [50, 150, 750].sample, name: 'Silver')
+  denoms.each do |denom|
+    denom.allocations.create! count: rand(100..500)
+  end
+end

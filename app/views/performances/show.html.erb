@@ -1,7 +1,6 @@
-<h4 class="text-right text-muted my-4"><%= @company.name %></h4>
-<h1><%= @show.name %></h1>
+<h4 class="text-right text-muted my-4"><a href="<%= company_link_path @company.slug %>"><%= @company.name %></a></h4>
+<h1><a href="<%= show_link_path @company.slug, @show.slug %>"><%= @show.name %></a></h1>
 <h5><%= @show.tagline %></h5>
-<hr/>
 <div class="row my-3">
   <div class="col-12 col-md-6 mb-3 mb-md-0">
     <%= render partial: "media/datetime", locals: { datetime: @performance.showtime } %>
@@ -10,62 +9,70 @@
     <%= render partial: "media/venue", locals: { venue: @performance.venue } %>
   </div>
 </div>
+<%= form_tag booking_link_path do |f| %>
+  <div class="row my-3">
+    <% @performance.denominations.sort_by(&:price).reverse.each_with_index do |denom, i| %>
+      <div class="col-12 col-sm-6 my-2">
+        <div class="" style="cursor: pointer;">
+          <input type="radio" id="<%= denom.id %>" name="denom"
+                 <% if i == 0 %>checked
+                 <% end %>  class="special" value="<%= denom.id %>">
+          <label class="special" for="<%= denom.id %>"><%= denom.name %>
+            <span class="float-right">₹<%= denom.price %></span></label>
+        </div>
+      </div>
+    <% end %>
 
-<div class="row my-3">
-  <div class="col-12 mb-3">
-    <div class="input-group input-group-lg">
-      <div class="input-group-prepend">
-        <label class="input-group-text" for="tickettype">Ticket Type:</label>
+  </div>
+
+  <div class="row my-3">
+    <div class="col-12">
+      <div class="input-group input-group-lg">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="count">Ticket Count:</label>
+        </div>
+        <select name="count" id="count" aria-label="Ticket count selection">
+          <% (1..10).map do |t| %>
+            <option value="<%= t %>"><%= t %></option>
+          <% end %>
+        </select>
       </div>
-      <select id="tickettype" aria-label="Ticket type selection">
-        <% @performance.denominations.each do |denom| %>
-          <option value="<%= denom.price %>">₹<%= denom.price %></option>
-        <% end %>
-      </select>
+
     </div>
   </div>
-  <div class="col-12 mb-3">
-    <div class="input-group input-group-lg">
-      <div class="input-group-prepend">
-        <label class="input-group-text" for="ticketcount">Ticket Count:</label>
+
+  <div class="row my-3">
+    <div class="col-12 my-2">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="name">Name:</label>
+        </div>
+        <input type="text" class="form-control text-center" id="name" name="name" required/>
       </div>
-      <select id="ticketcount" aria-label="Ticket count selection">
-        <% (1..10).map do |t| %>
-          <option value="<%= t %>"><%= t %></option>
-        <% end %>
-      </select>
+    </div>
+    <div class="col-12 my-2">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="email">Email Address:</label>
+        </div>
+        <input type="email" name="email" class="form-control text-center" required id="email"/>
+      </div>
+    </div>
+    <div class="col-12 my-2">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="mobile">Mobile Number:</label>
+        </div>
+        <input type="tel" class="form-control text-center" name="mobile" maxlength="10" required id="mobile"/>
+      </div>
     </div>
   </div>
-  <div class="col-12 mb-3">
-    <div class="input-group">
-      <div class="input-group-prepend">
-        <label class="input-group-text" for="name">Name:</label>
-      </div>
-      <input type="text" class="form-control text-center" id="name"/>
+  <div class="row my-3">
+    <div class="col-12">
+      <button class="btn btn-success btn-lg w-100 text-uppercase" type="submit">Book Tickets</button>
     </div>
   </div>
-  <div class="col-12 mb-3">
-    <div class="input-group">
-      <div class="input-group-prepend">
-        <label class="input-group-text" for="email">Email Address:</label>
-      </div>
-      <input type="email" class="form-control text-center" id="email"/>
-    </div>
-  </div>
-  <div class="col-12">
-    <div class="input-group">
-      <div class="input-group-prepend">
-        <label class="input-group-text" for="mobile">Mobile Number:</label>
-      </div>
-      <input type="tel" class="form-control text-center" maxlength="10" required id="mobile"/>
-    </div>
-  </div>
-</div>
-<div class="row my-3">
-  <div class="col-12">
-    <a class="btn btn-success btn-lg w-100 text-uppercase" href="https://rzp.io/i/LNeeYD2">Book Tickets</a>
-  </div>
-</div>
+<% end %>
 <p class="text-center text-muted">
   <small>Your ticket will be sent to the email address and mobile number that you provide.
   </small>

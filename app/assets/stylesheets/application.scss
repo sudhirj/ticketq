@@ -1,4 +1,14 @@
+$enable-responsive-font-sizes: true;
+$enable-gradients: true;
 @import "bootstrap";
+
+body {
+  font-variant-numeric: ordinal;
+}
+
+.btn {
+  //font-variant-numeric: tabular-nums;
+}
 
 hr {
   height: 0;
@@ -24,4 +34,29 @@ h1, h4 {
     color: inherit;
   }
 
+}
+
+label.special {
+  cursor: pointer;
+  @extend .bg-light;
+  @extend .shadow-sm;
+  @extend .rounded;
+  @extend .d-block;
+  @extend .p-3;
+  @extend .mb-0;
+  @extend .border;
+  @extend .text-dark;
+  font-weight: 500;
+
+}
+
+input:checked + label.special {
+  @extend .bg-primary;
+  @extend .text-white;
+  @extend .shadow;
+  @extend .border-primary;
+}
+
+input.special[type="radio"] {
+  display: none;
 }

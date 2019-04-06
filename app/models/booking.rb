@@ -5,6 +5,8 @@ class Booking < ApplicationRecord
   scope :confirmed, -> { where(confirmed: true) }
   scope :blocked, -> { where(confirmed: false, active: true) }
 
+  data_accessors :name, :mobile, :email
+
   before_save :set_status
 
   def set_status
@@ -18,19 +20,19 @@ class Booking < ApplicationRecord
                            type: 'invoice',
                            "line_items": [
                              amount: denomination.price * 100,
-                             name: 'Ticket',
+                             name: denomination.name,
                              currency: 'INR',
                              quantity: count
                            ],
                            customer: {
-                             name: 'Sudhir',
-                             email: 'sudhir.j@gmail.com',
-                             contact: '9789063705'
+                             name: name,
+                             email: email,
+                             contact: mobile
                            },
                            description: description,
                            receipt: receipt_id,
                            terms: terms,
-                           expire_by: 20.minutes.from_now.to_i
+                           expire_by: 30.minutes.from_now.to_i
                          }.to_json,
                          headers: rp_headers,
                          basic_auth: rp_auth)
@@ -43,16 +45,16 @@ class Booking < ApplicationRecord
   end
 
   def terms
-    %(
-Please pick up your tickets at the counter 30 minutes before the show.
-You can present the paid copy of this invoice to claim your tickets - an email and SMS will be sent to you on payment.
-    )
+    %(* This invoice is valid only if paid.
+* Please pick up your tickets at the counter before the show at least 15 minutes before the show starts.
+* You don't need to print this invoice on paper, an email / SMS is enough. )
   end
 
   def description
-    %(
-Tickets for the show.
-    )
+    %{Tickets for #{denomination.performance.show.name}
+on #{denomination.performance.showtime.strftime('%A')}, #{denomination.performance.showtime.to_date.to_s(:long)}
+at #{denomination.performance.showtime.strftime('%I:%M %p')}
+at #{denomination.performance.venue.name} (#{denomination.performance.venue.area}). After payment, this invoice can be exchagned for the tickets at the counter before the show.}
   end
 
   def refresh
@@ -70,6 +72,10 @@ Tickets for the show.
   end
 
   def receipt_id
+    ['TQ', denomination.performance.showtime.strftime('%Y%m%d%H%M'), short_id[0..7]].join('-')
+  end
+
+  def short_id
     ShortUUID.shorten id, 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'.chars
   end
 
@@ -80,4 +86,10 @@ Tickets for the show.
   def rp_headers
     { "Content-Type": 'application/json' }
   end
+
+  def url
+    rp_data.dig('short_url')
+  end
+
+
 end
