@@ -11,35 +11,34 @@
 </div>
 <hr class="my-3"/>
 <%= form_tag booking_link_path do |f| %>
-  <div class="row mt-3 mb-0">
+  <h5 class="my-3">Which tickets would you like?</h5>
+  <div class="row mt-3 mb-0 no-gutters mx-n2">
     <% @performance.denominations.sort_by(&:price).reverse.each_with_index do |denom, i| %>
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3 px-2">
         <div class="" style="cursor: pointer;">
           <input type="radio" id="<%= denom.id %>" name="denom"
-                 <% if i == 0 %>checked
+                 <% if i == 1 %>checked
                  <% end %>  class="special" value="<%= denom.id %>">
           <label class="special" for="<%= denom.id %>"><%= denom.name %>
-            <span class="float-right font-weight-bold">₹<%= denom.price %></span></label>
+            <span class="float-right font-weight-bold">₹<%= denom.price %><small> / ticket</small></span></label>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <h5 class="my-3">How many tickets would you like?</h5>
+  <div class="row mt-3 mb-0 no-gutters mx-n2">
+    <% (1..10).each_with_index do |count, i| %>
+      <div class="col-3 col-sm-2 col-lg-1 mb-3 px-2">
+        <div class="" style="cursor: pointer;">
+          <input type="radio" id="<%= count %>" name="count"
+                 <% if i == 1 %>checked
+                 <% end %>  class="special" value="<%= count %>">
+          <label class="special text-center" for="<%= count %>"><%= count %></label>
         </div>
       </div>
     <% end %>
   </div>
 
-  <div class="row mb-3">
-    <div class="col-12">
-      <div class="input-group input-group-lg shadow-sm">
-        <div class="input-group-prepend">
-          <label class="input-group-text bg-gradient-light text-muted" for="count">Ticket Count:</label>
-        </div>
-        <select name="count" id="count" aria-label="Ticket count selection">
-          <% (1..10).map do |t| %>
-            <option value="<%= t %>"><%= t %></option>
-          <% end %>
-        </select>
-      </div>
-
-    </div>
-  </div>
   <hr class="my-3"/>
   <div class="row my-3">
     <div class="col-12 mb-2">

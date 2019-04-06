@@ -2,14 +2,6 @@ $enable-responsive-font-sizes: true;
 $enable-gradients: true;
 @import "bootstrap";
 
-body {
-  font-variant-numeric: ordinal;
-}
-
-.btn {
-  //font-variant-numeric: tabular-nums;
-}
-
 hr {
   height: 0;
   border: 0;
@@ -45,7 +37,8 @@ label.special {
   @extend .p-3;
   @extend .mb-0;
   @extend .border;
-  @extend .text-muted;
+  @extend .border-primary;
+  @extend .text-primary;
 }
 
 input:checked + label.special {
@@ -53,6 +46,7 @@ input:checked + label.special {
   @extend .text-white;
   @extend .shadow;
   @extend .border-primary;
+  font-weight: bold;
 }
 
 input.special[type="radio"] {
