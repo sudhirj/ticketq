@@ -52,3 +52,19 @@ input:checked + label.special {
 input.special[type="radio"] {
   display: none;
 }
+
+form.payment {
+  input[type="submit"] {
+    @extend .btn;
+    @extend .btn-success;
+    @extend .btn-lg;
+    @extend .btn-block;
+    @extend .text-uppercase;
+    @extend .stretched-link;
+  }
+}
+
+.media.payment {
+  @extend .border;
+  @extend .border-success;
+}

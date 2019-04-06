@@ -10,7 +10,7 @@
   </div>
 </div>
 
-<%= form_tag booking_link_path do |f| %>
+<%= form_tag create_booking_link_path do |f| %>
   <h5 class="my-4">Which tickets would you like?</h5>
   <div class="row no-gutters mx-n2">
     <% @performance.denominations.sort_by(&:price).reverse.each_with_index do |denom, i| %>
@@ -20,7 +20,7 @@
                  <% if i == 1 %>checked
                  <% end %>  class="special" value="<%= denom.id %>">
           <label class="special" for="<%= denom.id %>"><%= denom.name %>
-            <span class="float-right font-weight-bold">₹<%= denom.price %><small> / ticket</small></span></label>
+            <span class="float-right font-weight-bold">₹<%= denom.price %><small> / seat</small></span></label>
         </div>
       </div>
     <% end %>

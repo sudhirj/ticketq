@@ -62,3 +62,4 @@ gem 'dotenv-rails', groups: %i[development test]
 gem 'httparty'
 gem 'rubocop', group: :development
 gem 'shortuuid'
+gem 'paisa'

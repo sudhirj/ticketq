@@ -3,6 +3,13 @@
 class Booking < ApplicationRecord
   RECEIPT_ALPHABET = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'
   belongs_to :denomination
+
+  delegate :company, to: :denomination
+  delegate :show, to: :denomination
+  delegate :performance, to: :denomination
+  delegate :venue, to: :denomination
+
+
   scope :confirmed, -> { where(confirmed: true) }
   scope :blocked, -> { where(confirmed: false, active: true) }
 
@@ -13,6 +20,7 @@ class Booking < ApplicationRecord
   def set_status
     self.confirmed = rp_data.dig('status') == 'paid'
     self.active = false if rp_data.dig('status') == 'expired'
+    self.receipt = rp_data.dig('receipt')
   end
 
   def ensure_rp_invoice
@@ -33,7 +41,9 @@ class Booking < ApplicationRecord
                            description: description,
                            receipt: receipt_id,
                            terms: terms,
-                           expire_by: 30.minutes.from_now.to_i
+                           expire_by: expire_at.to_i,
+                           sms_notify: 0,
+                           email_notify: 0
                          }.to_json,
                          headers: rp_headers,
                          basic_auth: rp_auth)
@@ -50,26 +60,42 @@ class Booking < ApplicationRecord
 * You don't need to print this invoice on paper, an email / SMS is enough.)
   end
 
+  def expire_at
+    created_at + 30.minutes
+  end
+
   def description
-    %{Tickets for #{denomination.performance.show.name} on #{denomination.performance.showtime.strftime('%A')}, #{denomination.performance.showtime.to_date.to_s(:long)} at #{denomination.performance.showtime.strftime('%I:%M %p')} at #{denomination.performance.venue.name} (#{denomination.performance.venue.area}). After payment, this invoice can be exchagned for the tickets at the counter before the show.}
+    %{#{count} #{denomination.name} #{'ticket'.pluralize(count)} for #{denomination.performance.show.name} on #{showdate_display} at #{showtime_display} at #{denomination.performance.venue.name} (#{denomination.performance.venue.area}).}
+  end
+
+  def showdate_display
+    "#{denomination.performance.showtime.strftime('%A')}, #{denomination.performance.showtime.to_date.to_s(:long)}"
+  end
+
+  def showtime_display
+    denomination.performance.showtime.strftime('%I:%M %p')
   end
 
   def refresh
-    resp = HTTParty.get('https://api.razorpay.com/v1/invoices',
-                        query: {
-                          receipt: receipt_id
-                        },
-                        headers: rp_headers,
-                        basic_auth: rp_auth)
-    return if resp.code != 200
-    return if resp.parsed_response['count'].zero?
+    return if confirmed || !active
 
-    self.rp_data = resp.parsed_response['items'].first
+    resp = HTTParty.get("https://api.razorpay.com/v1/invoices/#{rp_data.dig('id')}", headers: rp_headers, basic_auth: rp_auth)
+    return if resp.code != 200
+
+    self.rp_data = resp.parsed_response
     save!
+    if confirmed
+      pp HTTParty.post("https://api.razorpay.com/v1/invoices/#{rp_data.dig('id')}/notify_by/sms", headers: rp_headers, basic_auth: rp_auth)
+      pp HTTParty.post("https://api.razorpay.com/v1/invoices/#{rp_data.dig('id')}/notify_by/email", headers: rp_headers, basic_auth: rp_auth)
+    end
   end
 
   def receipt_id
-    ['TQ', timecode, short_id[0..5]].join('-')
+    ['TQ', timecode, passcode].join('-')
+  end
+
+  def passcode
+    short_id[0..5]
   end
 
   def timecode

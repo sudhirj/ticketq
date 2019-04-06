@@ -1,0 +1,94 @@
+<h4 class="text-right text-muted my-4">
+  <a href="<%= company_link_path @booking.company.slug %>"><%= @booking.company.name %></a></h4>
+<h1><a href="<%= show_link_path @booking.company.slug, @booking.show.slug %>"><%= @booking.show.name %></a></h1>
+<h5><%= @booking.show.tagline %></h5>
+<% if @booking.confirmed %>
+  <div class="card my-4 bg-gradient-light shadow border border-primary">
+    <div class="card-header bg-gradient-primary"><strong class="text-light">Tickets Confirmed</strong></div>
+    <div class="card-body">
+      <p class="card-text"><strong>
+        <span class="text-muted">Confirmation Code: </span><%= @booking.passcode %></strong></p>
+      <p class="card-text"><strong>
+        <span class="text-muted">Type:</span> <%= @booking.denomination.name %>
+        / <%= Paisa.format_with_sym(@booking.denomination.price * 100, precision: 0) %></strong></p>
+      <p class="card-text"><strong>
+        <span class="text-muted">Seats:</span> <%= @booking.count %></strong></p>
+      <p class="card-text"><strong>
+        <span class="text-muted">Total:</span> <%= Paisa.format_with_sym(@booking.rp_data.dig('amount'), precision: 0) %>
+      </strong></p>
+      <p class="card-text"><strong>
+        <span class="text-muted">Time:</span> <%= @booking.showtime_display %></strong></p>
+      <p class="card-text"><strong>
+        <span class="text-muted">Date:</span> <%= @booking.showdate_display %></strong></p>
+      <p class="card-text mt-3 mb-0">
+        <small class="text-muted">Please use the Confirmation Code above to pick up your tickets at the venue at least
+          15 minutes before the show. To avoid security complications, please carry some form of ID with the name
+          "<%= @booking.name %>" on it, or the mobile phone with the number ending with "<%= @booking.mobile[6..] %>".
+        </small>
+      </p>
+      <p class="card-text mt-3 mb-0">
+        <small class="text-muted">Do not share this page or your confirmation code with anyone unless they are
+          authorized to pick up these tickets. If you'd like to view this ticket on a different device, you can use this
+          link:
+          <a target="_blank" href="<%= booking_link_url @booking.receipt %>"><%= booking_link_url @booking.receipt %></a>
+        </small>
+
+      </p>
+    </div>
+  </div>
+<% end %>
+<% if !@booking.confirmed && @booking.active %>
+  <div class="card my-4 bg-gradient-light shadow-sm border border-success">
+    <div class="card-header bg-gradient-success"><strong class="text-light">Tickets Available</strong></div>
+    <div class="card-body">
+      <p class="card-text text-right"><strong>
+        <span class="text-muted">Type:</span> <%= @booking.denomination.name %>
+        / <%= Paisa.format_with_sym(@booking.denomination.price * 100, precision: 0) %></strong></p>
+      <p class="card-text text-right"><strong>
+        <span class="text-muted">Seats:</span> <%= @booking.count %></strong></p>
+      <p class="card-text text-right"><strong>
+        <span class="text-muted">Total:</span> <%= Paisa.format_with_sym(@booking.rp_data.dig('amount'), precision: 0) %>
+      </strong></p>
+      <form action="<%= booking_link_path(params[:receipt]) %>" method="GET" class="payment">
+        <script
+          src="https://checkout.razorpay.com/v1/checkout.js"
+          data-invoice_id="<%= @booking.rp_data.dig('id') %>"
+          data-name="<%= @booking.company.name %>"
+          data-key="<%= @booking.rp_auth[:username] %>"
+          data-description="<%= @booking.description %>"
+          data-amount="<%= @booking.rp_data.dig('amount') %>"></script>
+      </form>
+      <p class="card-text mt-3 mb-0">
+        <small class="text-muted">These tickets will be reserved for you
+          until <%= @booking.expire_at.strftime('%I:%M %p') %>. If you'd like to make the payment from a different
+          device, you can use this link:
+          <a target="_blank" href="<%= booking_link_url @booking.receipt %>"><%= booking_link_url @booking.receipt %></a>
+        </small>
+      </p>
+    </div>
+  </div>
+
+<% end %>
+<div class="row my-3">
+  <% if @booking.confirmed %>
+    <div class="col-12 col-md-6 mb-3">
+      <div class="media">
+        <a href="https://goo.gl/maps/zVWDoQpFn952" target="_blank"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=<%= booking_link_url @booking.receipt %>" class="mr-3 rounded" width="80px" height="80px" alt="..."></a>
+        <div class="media-body">
+          <h5 class="mt-0"><span class="text-muted">Code:</span> <%= @booking.passcode %></h5>
+          <strong><%= @booking.count %></strong> x <strong><%= @booking.denomination.name %>
+          / <%= Paisa.format_with_sym @booking.denomination.price * 100, precision: 0 %></strong>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <div class="col-12 col-md-6 mb-3">
+    <%= render partial: "media/datetime", locals: { datetime: @booking.performance.showtime } %>
+  </div>
+  <div class="col-12 col-md-6 mb-3">
+    <%= render partial: "media/venue", locals: { venue: @booking.venue } %>
+  </div>
+</div>
+
+
+

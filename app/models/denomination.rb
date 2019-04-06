@@ -5,5 +5,9 @@ class Denomination < ApplicationRecord
   has_many :allocations
   has_many :bookings
 
+  delegate :company, to: :performance
+  delegate :show, to: :performance
+  delegate :venue, to: :performance
+
   data_accessors :name
 end

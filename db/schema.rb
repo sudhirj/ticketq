@@ -32,9 +32,11 @@ ActiveRecord::Schema.define(version: 2019_03_30_183434) do
     t.integer "count", null: false
     t.boolean "confirmed", default: false, null: false
     t.boolean "active", default: true, null: false
+    t.string "receipt"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["denomination_id"], name: "index_bookings_on_denomination_id"
+    t.index ["receipt"], name: "index_bookings_on_receipt"
   end
 
   create_table "companies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
