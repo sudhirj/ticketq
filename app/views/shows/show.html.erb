@@ -5,15 +5,15 @@
   <div class="media bg-light rounded p-3 my-3">
     <img src="https://source.unsplash.com/256x256/?architecture" class="mr-3 rounded" style="width: 64px;" alt="...">
     <div class="media-body">
-      <h5 class="mt-0 mb-3"><%= venue.name %>&nbsp;<small class="text-muted"><%= venue.area %></small>
+      <h5 class="mt-0 mb-2"><%= venue.name %>&nbsp;<small class="text-muted"><%= venue.area %></small>
       </h5>
       <% performances.sort_by(&:showtime).group_by { |p| p.showtime.to_date }.each do |date, performances| %>
-        <div class="row no-gutters mx-n2 my-3 mb-n2">
-          <div class="col-12 px-2 my-0">
-            <h6 class="mb-1 border-top pt-3"><%= date.strftime('%A').upcase %>&nbsp;/&nbsp;<%= date.strftime("#{date.day.ordinalize} %B %Y") %></h6>
+        <div class="row">
+          <div class="col-12 my-2">
+            <h6 class="mb-1 pt-3 border-top"><%= date.strftime('%A').upcase %>&nbsp;/&nbsp;<%= date.strftime("#{date.day.ordinalize} %B %Y") %></h6>
           </div>
           <% performances.each do |performance| %>
-            <div class="col-6 col-md-4 my-2 px-2">
+            <div class="col-12 col-sm-6 col-md-4 mb-2">
               <a class="btn btn-primary text-uppercase w-100" href="<%= performance_link_path @company.slug, @show.slug, performance.venue.slug, performance.showtime.to_formatted_s(:iso8601) %>" role="button"><%= performance.showtime.strftime('%I:%M %p') %></a>
             </div>
           <% end %>
