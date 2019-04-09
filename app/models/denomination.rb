@@ -10,4 +10,22 @@ class Denomination < ApplicationRecord
   delegate :venue, to: :performance
 
   data_accessors :name
+
+
+  def allocated_count
+    allocations.sum(:count)
+  end
+
+  def confirmed_count
+    bookings.where(confirmed: true).sum(:count)
+  end
+
+  def blocked_count
+    bookings.where(confirmed: false, active: true).sum(:count)
+  end
+
+  def available_count
+    allocated_count - confirmed_count - blocked_count
+  end
+
 end

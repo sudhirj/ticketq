@@ -76,7 +76,7 @@ class Booking < ApplicationRecord
     denomination.performance.showtime.strftime('%I:%M %p')
   end
 
-  def refresh
+  def rp_refresh
     return if confirmed || !active
 
     resp = HTTParty.get("https://api.razorpay.com/v1/invoices/#{rp_data.dig('id')}", headers: rp_headers, basic_auth: rp_auth)
@@ -84,10 +84,6 @@ class Booking < ApplicationRecord
 
     self.rp_data = resp.parsed_response
     save!
-    if confirmed
-      pp HTTParty.post("https://api.razorpay.com/v1/invoices/#{rp_data.dig('id')}/notify_by/sms", headers: rp_headers, basic_auth: rp_auth)
-      pp HTTParty.post("https://api.razorpay.com/v1/invoices/#{rp_data.dig('id')}/notify_by/email", headers: rp_headers, basic_auth: rp_auth)
-    end
   end
 
   def receipt_id
