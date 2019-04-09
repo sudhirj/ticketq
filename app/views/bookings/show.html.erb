@@ -20,6 +20,8 @@
         <span class="text-muted">Time:</span> <%= @booking.showtime_display %></strong></p>
       <p class="card-text"><strong>
         <span class="text-muted">Date:</span> <%= @booking.showdate_display %></strong></p>
+      <p class="card-text"><strong>
+        <span class="text-muted">Venue:</span> <%= @booking.venue.name %> <small>(<%= @booking.venue.area %>)</small></strong></p>
       <p class="card-text mt-3 mb-0">
         <small class="text-muted">Please use the Confirmation Code above to pick up your tickets at the venue at least
           15 minutes before the show. To avoid security complications, please carry some form of ID with the name
@@ -83,10 +85,10 @@
     </div>
   <% end %>
   <div class="col-12 col-md-6 mb-3">
-    <%= render partial: "media/datetime", locals: { datetime: @booking.performance.showtime } %>
+    <%= render partial: "media/datetime", locals: {datetime: @booking.performance.showtime} %>
   </div>
   <div class="col-12 col-md-6 mb-3">
-    <%= render partial: "media/venue", locals: { venue: @booking.venue } %>
+    <%= render partial: "media/venue", locals: {venue: @booking.venue} %>
   </div>
 </div>
 
