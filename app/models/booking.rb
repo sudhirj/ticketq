@@ -87,10 +87,18 @@ class Booking < ApplicationRecord
   end
 
   def receipt_id
-    ['TQ', timecode, passcode].join('-')
+    ['TQ',performance_shortcode, denom_shortcode, shortcode].join('-')
   end
 
-  def passcode
+  def performance_shortcode
+    ShortUUID.shorten(performance.id, RECEIPT_ALPHABET.chars)[0..5]
+  end
+
+  def denom_shortcode
+    ShortUUID.shorten(denomination.id, RECEIPT_ALPHABET.chars)[0..2]
+  end
+
+  def shortcode
     short_id[0..5]
   end
 

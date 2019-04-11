@@ -7,7 +7,7 @@
     <div class="card-header bg-gradient-primary"><strong class="text-light">Tickets Confirmed</strong></div>
     <div class="card-body">
       <p class="card-text"><strong>
-        <span class="text-muted">Confirmation Code: </span><%= @booking.passcode %></strong></p>
+        <span class="text-muted">Confirmation Code: </span><%= @booking.shortcode %></strong></p>
       <p class="card-text"><strong>
         <span class="text-muted">Type:</span> <%= @booking.denomination.name %>
         / <%= Paisa.format_with_sym(@booking.denomination.price * 100, precision: 0) %></strong></p>
@@ -78,7 +78,7 @@
       <div class="media">
         <a href="https://goo.gl/maps/zVWDoQpFn952" target="_blank"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=<%= booking_link_url @booking.receipt %>" class="mr-3 rounded" width="80px" height="80px" alt="..."></a>
         <div class="media-body">
-          <h5 class="mt-0"><span class="text-muted">Code:</span> <%= @booking.passcode %></h5>
+          <h5 class="mt-0"><span class="text-muted">Code:</span> <%= @booking.shortcode %></h5>
           <strong><%= @booking.count %></strong> x <strong><%= @booking.denomination.name %>
           / <%= Paisa.format_with_sym @booking.denomination.price * 100, precision: 0 %></strong>
         </div>
