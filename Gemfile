@@ -63,3 +63,4 @@ gem 'httparty'
 gem 'rubocop', group: :development
 gem 'shortuuid'
 gem 'paisa'
+gem 'mustache'

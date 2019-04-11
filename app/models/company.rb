@@ -1,7 +1,7 @@
 class Company < ApplicationRecord
   has_many :shows
 
-  data_accessors :name
+  data_accessors :name, :rp_account
 
 
 

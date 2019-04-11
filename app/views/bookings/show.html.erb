@@ -57,6 +57,7 @@
           data-invoice_id="<%= @booking.rp_data.dig('id') %>"
           data-name="<%= @booking.company.name %>"
           data-key="<%= @booking.rp_auth[:username] %>"
+          data-account_id="<%= @booking.company.rp_account %>"
           data-description="<%= @booking.description %>"
           data-amount="<%= @booking.rp_data.dig('amount') %>"></script>
       </form>

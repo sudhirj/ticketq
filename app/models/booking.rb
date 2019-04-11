@@ -10,8 +10,8 @@ class Booking < ApplicationRecord
   delegate :venue, to: :denomination
 
 
-  scope :confirmed, -> { where(confirmed: true) }
-  scope :blocked, -> { where(confirmed: false, active: true) }
+  scope :confirmed, -> {where(confirmed: true)}
+  scope :blocked, -> {where(confirmed: false, active: true)}
 
   data_accessors :name, :mobile, :email
 
@@ -26,24 +26,24 @@ class Booking < ApplicationRecord
   def ensure_rp_invoice
     resp = HTTParty.post('https://api.razorpay.com/v1/invoices',
                          body: {
-                           type: 'invoice',
-                           line_items: [
-                             amount: denomination.price * 100,
-                             name: denomination.name,
-                             currency: 'INR',
-                             quantity: count
-                           ],
-                           customer: {
-                             name: name,
-                             email: email,
-                             contact: mobile
-                           },
-                           description: description,
-                           receipt: receipt_id,
-                           terms: terms,
-                           expire_by: expire_at.to_i,
-                           sms_notify: 0,
-                           email_notify: 0
+                             type: 'invoice',
+                             line_items: [
+                                 amount: denomination.price * 100,
+                                 name: denomination.name,
+                                 currency: 'INR',
+                                 quantity: count
+                             ],
+                             customer: {
+                                 name: name,
+                                 email: email,
+                                 contact: mobile
+                             },
+                             description: description,
+                             receipt: receipt_id,
+                             terms: terms,
+                             expire_by: expire_at.to_i,
+                             sms_notify: 0,
+                             email_notify: 0
                          }.to_json,
                          headers: rp_headers,
                          basic_auth: rp_auth)
@@ -76,7 +76,7 @@ class Booking < ApplicationRecord
     denomination.performance.showtime.strftime('%I:%M %p')
   end
 
-  def rp_refresh
+  def refresh
     return if confirmed || !active
 
     resp = HTTParty.get("https://api.razorpay.com/v1/invoices/#{rp_data.dig('id')}", headers: rp_headers, basic_auth: rp_auth)
@@ -104,11 +104,14 @@ class Booking < ApplicationRecord
   end
 
   def rp_auth
-    { username: 'rzp_test_gn9vzTBHdzvvBt', password: 'IDWBzrnB3LxEBfGkm1EjhASw' }
+    {username: ENV.fetch('RP_KEY_ID'), password: ENV.fetch('RP_KEY_SECRET')}
   end
 
   def rp_headers
-    { "Content-Type": 'application/json' }
+    {
+        'Content-Type': 'application/json',
+        'x-razorpay-account': company.rp_account
+    }
   end
 
   def url
