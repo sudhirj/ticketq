@@ -125,7 +125,7 @@ class Booking < ApplicationRecord
     }
   end
 
-  def url
+  def invoice_url
     rp_data.dig('short_url')
   end
 end
