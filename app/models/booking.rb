@@ -48,7 +48,10 @@ class Booking < ApplicationRecord
                          headers: rp_headers,
                          basic_auth: rp_auth)
 
-    return if resp.code != 200
+    if resp.code != 200
+      logger.error resp
+      raise 'Razorpay Error'
+    end
 
     self.rp_data = resp.parsed_response
     save!
