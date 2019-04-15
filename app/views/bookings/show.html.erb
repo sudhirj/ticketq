@@ -45,12 +45,12 @@
   <div class="card my-4 bg-gradient-light shadow-sm border border-success">
     <div class="card-header bg-gradient-success"><strong class="text-light">Tickets Available</strong></div>
     <div class="card-body">
-      <p class="card-text text-right"><strong>
+      <p class="card-text"><strong>
         <span class="text-muted">Type:</span> <%= @booking.denomination.name %>
         / <%= Paisa.format_with_sym(@booking.denomination.price * 100, precision: 0) %></strong></p>
-      <p class="card-text text-right"><strong>
+      <p class="card-text"><strong>
         <span class="text-muted">Seats:</span> <%= @booking.count %></strong></p>
-      <p class="card-text text-right"><strong>
+      <p class="card-text"><strong>
         <span class="text-muted">Total:</span> <%= Paisa.format_with_sym(@booking.rp_data.dig('amount'), precision: 0) %>
       </strong></p>
       <form action="<%= booking_link_path(params[:receipt]) %>" method="GET" class="payment">
