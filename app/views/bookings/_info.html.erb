@@ -1,0 +1,16 @@
+<p class="card-text"><strong>
+  <span class="text-muted">Time:</span> <%= booking.showtime_display %></strong></p>
+<p class="card-text"><strong>
+  <span class="text-muted">Date:</span> <%= booking.showdate_display %></strong></p>
+<p class="card-text"><strong>
+  <span class="text-muted">Venue:</span> <%= booking.venue.name %>
+  <small>(<%= booking.venue.area %>)</small>
+</strong></p>
+<p class="card-text"><strong>
+  <span class="text-muted">Type:</span> <%= booking.denomination.name %>
+  / <%= Paisa.format_with_sym(booking.denomination.price * 100, precision: 0) %></strong></p>
+<p class="card-text"><strong>
+  <span class="text-muted">Seats:</span> <%= booking.count %></strong></p>
+<p class="card-text"><strong>
+  <span class="text-muted">Total:</span> <%= Paisa.format_with_sym(booking.rp_data.dig('amount'), precision: 0) %>
+</strong></p>

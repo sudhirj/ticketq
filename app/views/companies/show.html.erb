@@ -13,9 +13,21 @@
         <ul class="list-group list-group-flush">
           <li class="list-group-item"><span class="font-weight-bold"><%= key.venue.name %></span>&nbsp;<small class="text-muted"><%= key.venue.area %></small>
           </li>
-          <% performances.group_by { |p| p.showtime.to_date }.each do |date, performances| %>
-            <li class="list-group-item d-flex justify-content-between align-items-baseline"><span><%= date.strftime("%A, #{date.day.ordinalize} %B") %></span><small class="text-uppercase text-muted"><%= performances.size %> <%= 'show'.pluralize(performances.size) %></small>
-            </li>
+          <% performances.map {|p| p.showtime.to_date}.uniq.sort.tap do |dates| %>
+            <% dates.first.tap do |date| %>
+              <li class="list-group-item d-flex justify-content-between align-items-baseline">
+                <small class="text-uppercase text-muted"><%= dates.size > 1 ? 'From' : 'On' %></small>&nbsp;
+                <span><%= date.strftime("%A, #{date.day.ordinalize} %B") %></span>
+              </li>
+            <% end %>
+            <% if dates.size > 1 %>
+              <% dates.last.tap do |date| %>
+                <li class="list-group-item d-flex justify-content-between align-items-baseline">
+                  <small class="text-uppercase text-muted">To</small>
+                  <span><%= date.strftime("%A, #{date.day.ordinalize} %B") %></span>
+                </li>
+              <% end %>
+            <% end %>
           <% end %>
         </ul>
         <div class="card-body">

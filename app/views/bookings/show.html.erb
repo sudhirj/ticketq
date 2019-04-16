@@ -8,22 +8,7 @@
     <div class="card-body">
       <p class="card-text"><strong>
         <span class="text-muted">Confirmation Code: </span><%= @booking.shortcode %></strong></p>
-      <p class="card-text"><strong>
-        <span class="text-muted">Type:</span> <%= @booking.denomination.name %>
-        / <%= Paisa.format_with_sym(@booking.denomination.price * 100, precision: 0) %></strong></p>
-      <p class="card-text"><strong>
-        <span class="text-muted">Seats:</span> <%= @booking.count %></strong></p>
-      <p class="card-text"><strong>
-        <span class="text-muted">Total:</span> <%= Paisa.format_with_sym(@booking.rp_data.dig('amount'), precision: 0) %>
-      </strong></p>
-      <p class="card-text"><strong>
-        <span class="text-muted">Time:</span> <%= @booking.showtime_display %></strong></p>
-      <p class="card-text"><strong>
-        <span class="text-muted">Date:</span> <%= @booking.showdate_display %></strong></p>
-      <p class="card-text"><strong>
-        <span class="text-muted">Venue:</span> <%= @booking.venue.name %>
-        <small>(<%= @booking.venue.area %>)</small>
-      </strong></p>
+      <%= render partial: "bookings/info", locals: { booking: @booking } %>
       <p class="card-text mt-3 mb-0">
         <small class="text-muted">Please use the Confirmation Code above to pick up your tickets at the venue at least
           15 minutes before the show. To avoid security complications, please carry some form of ID with the name
@@ -45,14 +30,7 @@
   <div class="card my-4 bg-gradient-light shadow-sm border border-success">
     <div class="card-header bg-gradient-success"><strong class="text-light">Tickets Available</strong></div>
     <div class="card-body">
-      <p class="card-text"><strong>
-        <span class="text-muted">Type:</span> <%= @booking.denomination.name %>
-        / <%= Paisa.format_with_sym(@booking.denomination.price * 100, precision: 0) %></strong></p>
-      <p class="card-text"><strong>
-        <span class="text-muted">Seats:</span> <%= @booking.count %></strong></p>
-      <p class="card-text"><strong>
-        <span class="text-muted">Total:</span> <%= Paisa.format_with_sym(@booking.rp_data.dig('amount'), precision: 0) %>
-      </strong></p>
+      <%= render partial: "bookings/info", locals: { booking: @booking } %>
       <form action="<%= booking_link_path(params[:receipt]) %>" method="GET" class="payment">
         <script
           src="https://checkout.razorpay.com/v1/checkout.js"
@@ -61,7 +39,8 @@
           data-key="<%= @booking.rp_auth[:username] %>"
           data-account_id="<%= @booking.company.rp_account %>"
           data-description="<%= @booking.description %>"
-          data-amount="<%= @booking.rp_data.dig('amount') %>"></script>
+          data-amount="<%= @booking.rp_data.dig('amount') %>"
+          data-turbolinks-eval="false" async defer></script>
       </form>
       <p class="card-text mt-3 mb-0">
         <small class="text-muted">These tickets will be reserved for you
