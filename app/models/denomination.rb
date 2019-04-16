@@ -28,4 +28,8 @@ class Denomination < ApplicationRecord
     allocated_count - confirmed_count - blocked_count
   end
 
+  def can_book?(wanted_count)
+    available_count >= wanted_count
+  end
+
 end

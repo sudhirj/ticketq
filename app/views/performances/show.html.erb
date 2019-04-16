@@ -1,6 +1,11 @@
 <%= render partial: "companies/navbar", locals: {company: @company} %>
 <h1><a href="<%= show_link_path @company.slug, @show.slug %>"><%= @show.name %></a></h1>
 <h5><%= @show.tagline %></h5>
+<% if flash[:notice] %>
+  <div class="alert alert-danger my-3" role="alert">
+    <strong>Sorry!</strong> Your tickets could not be booked at this time. Please try again later.
+  </div>
+<% end %>
 <div class="row my-3">
   <div class="col-12 col-md-6 mb-3 mb-md-0">
     <%= render partial: "media/datetime", locals: {datetime: @performance.showtime} %>
