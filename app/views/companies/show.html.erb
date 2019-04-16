@@ -1,9 +1,9 @@
-<h1 class="display-5 my-4"><a href="<%= company_link_path @company.slug %>"><%= @company.name %></a></h1>
+<%= render partial: "companies/navbar", locals: {company: @company} %>
 <div class="row">
   <% @performance_groups.each do |key, performances| %>
     <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
       <div class="card mb-4">
-        <img src="https://source.unsplash.com/random" class="card-img-top" alt="...">
+        <img src="https://source.unsplash.com/featured/?<%=key.show.name.parameterize%>" class="card-img-top" alt="...">
         <div class="card-body">
           <h3 class="card-title"><%= key.show.name %></h3>
           <p class="lead"><%= key.show.tagline %></p>

@@ -1,5 +1,4 @@
-<h4 class="text-right text-muted my-4">
-  <a href="<%= company_link_path @booking.company.slug %>"><%= @booking.company.name %></a></h4>
+<%= render partial: "companies/navbar", locals: {company: @booking.company} %>
 <h1><a href="<%= show_link_path @booking.company.slug, @booking.show.slug %>"><%= @booking.show.name %></a></h1>
 <h5><%= @booking.show.tagline %></h5>
 <% if @booking.confirmed %>

@@ -1,4 +1,4 @@
-<h4 class="text-right text-muted my-4"><a href="<%= company_link_path @company.slug %>"><%= @company.name %></a></h4>
+<%= render partial: "companies/navbar", locals: {company: @company} %>
 <h1><a href="<%= show_link_path @company.slug, @show.slug %>"><%= @show.name %></a></h1>
 <h5><%= @show.tagline %></h5>
 <div class="row my-3">
