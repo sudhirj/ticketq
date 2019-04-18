@@ -16,6 +16,7 @@ class Booking < ApplicationRecord
   data_accessors :name, :mobile, :email
 
   before_save :set_status
+  after_commit :schedule_delivery_if_confirmed
 
   def set_status
     self.confirmed = rp_data.dig('status') == 'paid'
@@ -146,7 +147,7 @@ class Booking < ApplicationRecord
             subject: { charset: 'UTF-8', data: "Tickets for #{show.name}" }
         },
         source: "ticketQ <tickets@ticketq.in>",
-        reply_to_addresses: 'tickets@ticketq.in'
+        reply_to_addresses: ['tickets@ticketq.in']
     )
     update_attributes email_sent: true
   end
@@ -162,11 +163,21 @@ class Booking < ApplicationRecord
     "You have reserved and paid for #{count} #{'ticket'.pluralize(count)} in the #{denomination.name} / #{Paisa.format_with_sym(denomination.price * 100, precision: 0)} category for the performance of \"#{show.name}\" at #{showtime_display} on #{showdate_display} at #{venue_display}. Your pickup code is #{shortcode}. You can access this reservation at any time by visiting https://ticketQ.in/#{receipt}"
   end
 
+  def deliver
+    send_sms
+    send_email
+  end
+
+  def schedule_delivery_if_confirmed
+    return unless confirmed
+    DeliveryJob.perform_later self
+  end
+
   def ses
     Aws::SES::Client.new
   end
 
   def sns
-    Aws::SNS::Client.new({region: ENV.fetch('AWS_REGION')})
+    Aws::SNS::Client.new
   end
 end
