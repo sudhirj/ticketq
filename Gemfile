@@ -64,3 +64,5 @@ gem 'rubocop', group: :development
 gem 'shortuuid'
 gem 'paisa'
 gem 'mustache'
+gem 'aws-sdk-ses'
+gem 'aws-sdk-sns'

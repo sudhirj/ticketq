@@ -33,6 +33,8 @@ ActiveRecord::Schema.define(version: 2019_03_30_183434) do
     t.boolean "confirmed", default: false, null: false
     t.boolean "active", default: true, null: false
     t.string "receipt"
+    t.boolean "email_sent", default: false, null: false
+    t.boolean "sms_sent", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["denomination_id"], name: "index_bookings_on_denomination_id"

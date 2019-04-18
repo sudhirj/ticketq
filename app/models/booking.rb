@@ -68,7 +68,7 @@ class Booking < ApplicationRecord
   end
 
   def description
-    %{#{count} #{denomination.name} #{'ticket'.pluralize(count)} for #{denomination.performance.show.name} on #{showdate_display} at #{showtime_display} at #{denomination.performance.venue.name} (#{denomination.performance.venue.area}).}
+    %{#{count} #{denomination.name} #{'ticket'.pluralize(count)} for #{denomination.performance.show.name} on #{showdate_display} at #{showtime_display} at #{venue_display}.}
   end
 
   def showdate_display
@@ -78,6 +78,11 @@ class Booking < ApplicationRecord
   def showtime_display
     denomination.performance.showtime.strftime('%I:%M %p')
   end
+
+  def venue_display
+    "#{denomination.performance.venue.name} (#{denomination.performance.venue.area})"
+  end
+
 
   def refresh
     return if confirmed || !active
@@ -127,5 +132,41 @@ class Booking < ApplicationRecord
 
   def invoice_url
     rp_data.dig('short_url')
+  end
+
+  def send_email
+    return if email_sent || !confirmed
+    logger.info ses.send_email(
+        destination: { to_addresses: [email] },
+        message: {
+            body: {
+                # html: { charset: 'UTF-8', data: html_message },
+                text: { charset: 'UTF-8', data: plaintext_message }
+            },
+            subject: { charset: 'UTF-8', data: "Tickets for #{show.name}" }
+        },
+        source: "ticketQ <tickets@ticketq.in>",
+        reply_to_addresses: 'tickets@ticketq.in'
+    )
+    update_attributes email_sent: true
+  end
+
+  def send_sms
+    return if sms_sent || !confirmed
+    logger.info sns.publish(phone_number: "+91#{mobile}".strip,
+                            message: plaintext_message)
+    update_attributes sms_sent: true
+  end
+
+  def plaintext_message
+    "You have reserved and paid for #{count} #{'ticket'.pluralize(count)} in the #{denomination.name} / #{Paisa.format_with_sym(denomination.price * 100, precision: 0)} category for the performance of \"#{show.name}\" at #{showtime_display} on #{showdate_display} at #{venue_display}. Your pickup code is #{shortcode}. You can access this reservation at any time by visiting https://ticketQ.in/#{receipt}"
+  end
+
+  def ses
+    Aws::SES::Client.new
+  end
+
+  def sns
+    Aws::SNS::Client.new({region: ENV.fetch('AWS_REGION')})
   end
 end

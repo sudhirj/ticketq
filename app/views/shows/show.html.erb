@@ -1,6 +1,5 @@
 <%= render partial: "companies/navbar", locals: {company: @company} %>
-<h1><a href="<%= show_link_path @company.slug, @show.slug %>" class="text-dark"><%= @show.name %></a></h1>
-<h5><%= @show.tagline %></h5>
+<%= render partial: "shows/header", locals: {show: @show} %>
 <% @venue_groups.each do |venue, performances| %>
   <div class="media bg-light rounded p-3 my-3">
     <img src="https://source.unsplash.com/256x256/?architecture" class="mr-3 rounded" style="width: 64px;" alt="...">

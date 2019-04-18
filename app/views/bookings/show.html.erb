@@ -1,6 +1,5 @@
 <%= render partial: "companies/navbar", locals: {company: @booking.company} %>
-<h1><a href="<%= show_link_path @booking.company.slug, @booking.show.slug %>"><%= @booking.show.name %></a></h1>
-<h5><%= @booking.show.tagline %></h5>
+<%= render partial: "shows/header", locals: {show: @booking.show} %>
 <% if @booking.confirmed %>
   <div class="card my-4 bg-gradient-light shadow border border-primary">
     <div class="card-header bg-gradient-primary"><strong class="text-light">Tickets Confirmed</strong></div>
@@ -20,7 +19,6 @@
           link:
           <a target="_blank" href="<%= booking_link_url @booking.receipt %>"><%= booking_link_url @booking.receipt %></a>
         </small>
-
       </p>
     </div>
   </div>

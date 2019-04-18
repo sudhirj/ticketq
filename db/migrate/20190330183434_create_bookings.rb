@@ -8,6 +8,8 @@ class CreateBookings < ActiveRecord::Migration[6.0]
       t.boolean :confirmed, null: false, default: false
       t.boolean :active, null: false, default: true
       t.string :receipt, index: { unique: false }
+      t.boolean :email_sent, null: false, default: false
+      t.boolean :sms_sent, null: false, default: false
       t.timestamps
     end
   end
