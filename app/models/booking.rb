@@ -170,6 +170,7 @@ class Booking < ApplicationRecord
 
   def schedule_delivery_if_confirmed
     return unless confirmed
+    return unless previous_changes.keys.include? "confirmed"
     DeliveryJob.perform_later self
   end
 
