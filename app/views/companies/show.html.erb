@@ -7,8 +7,6 @@
         <div class="card-body">
           <h3 class="card-title"><%= key.show.name %></h3>
           <p class="lead"><%= key.show.tagline %></p>
-          <!--          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's-->
-          <!--            content.</p>-->
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item"><span class="font-weight-bold"><%= key.venue.name %></span>&nbsp;<small class="text-muted"><%= key.venue.area %></small>
@@ -31,7 +29,7 @@
           <% end %>
         </ul>
         <div class="card-body">
-          <a href="<%= show_link_path(@company.slug, key.show.slug) %>" class="btn btn-primary text-uppercase w-100 stretched-link">Book
+          <a href="<%= show_venue_link_path(@company.slug, key.show.slug, key.venue.slug) %>" class="btn btn-primary text-uppercase w-100 stretched-link">Book
             Tickets</a>
         </div>
       </div>

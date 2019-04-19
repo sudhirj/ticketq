@@ -1,43 +1,46 @@
-<%= render partial: "companies/navbar", locals: {company: @company} %>
-<%= render partial: "shows/header", locals: {show: @show} %>
-<% @venue_groups.each do |venue, performances| %>
+<%= render partial: "companies/navbar", locals: { company: @company } %>
+<%= render partial: "shows/header", locals: { show: @show } %>
+
+<%@show.about.to_a.each do |para| %>
+  <p><%=para %></p>
+<% end %>
+<% @venue_groups.each do |venue, performances_by_venue| %>
   <div class="media bg-light rounded p-3 my-3">
     <img src="https://source.unsplash.com/256x256/?architecture" class="mr-3 rounded" style="width: 64px;" alt="...">
     <div class="media-body">
       <h5 class="mt-0 mb-2"><%= venue.name %>&nbsp;<small class="text-muted"><%= venue.area %></small>
       </h5>
-      <% performances.sort_by(&:showtime).group_by { |p| p.showtime.to_date }.each do |date, performances| %>
+      <% performances_by_venue.sort_by(&:showtime).group_by { |p| p.showtime.to_date }.each do |date, performances_by_date| %>
         <div class="row">
           <div class="col-12 my-2">
             <h6 class="mb-1 pt-3 border-top"><%= date.strftime('%A').upcase %>&nbsp;/&nbsp;<%= date.strftime("#{date.day.ordinalize} %B %Y") %></h6>
           </div>
-          <% performances.each do |performance| %>
-            <div class="col-12 col-sm-6 col-md-4 mb-2">
+          <% performances_by_date.each do |performance| %>
+            <div class="col-12 col-sm-6 col-lg-4 mb-2">
               <a class="btn btn-primary text-uppercase w-100" href="<%= performance_link_path @company.slug, @show.slug, performance.venue.slug, performance.showtime.to_formatted_s(:iso8601) %>" role="button"><%= performance.showtime.strftime('%I:%M %p') %></a>
             </div>
           <% end %>
         </div>
       <% end %>
-
     </div>
   </div>
 <% end %>
 
-<div class="row no-gutters mx-n2">
-  <figure class="col-4 col-md-2 figure px-2">
-    <img src="https://source.unsplash.com/256x256/?man" class="figure-img img-fluid rounded w-100" alt="...">
-    <figcaption class="figure-caption">Sandeep John</figcaption>
-  </figure>
-  <figure class="col-4 col-md-2 figure px-2">
-    <img src="https://source.unsplash.com/256x256/?woman" class="figure-img img-fluid rounded w-100" alt="...">
-    <figcaption class="figure-caption">Sangita Santosham</figcaption>
-  </figure>
-  <figure class="col-4 col-md-2 figure px-2">
-    <img src="https://source.unsplash.com/256x256/?man+face" class="figure-img img-fluid rounded w-100" alt="...">
-    <figcaption class="figure-caption">Yohan Chacko</figcaption>
-  </figure>
-  <figure class="col-4 col-md-2 figure px-2">
-    <img src="https://source.unsplash.com/256x256/?child" class="figure-img img-fluid rounded w-100" alt="...">
-    <figcaption class="figure-caption">Mina Boondhax</figcaption>
-  </figure>
+
+<div class="row no-gutters mx-n2 my-3">
+  <% @show.cast.to_a.each do |member| %>
+    <figure class="col-4 col-md-3 figure px-2">
+      <img src="https://source.unsplash.com/256x256/?<%= member["name"].to_s.parameterize %>" class="figure-img img-fluid rounded w-100" alt="...">
+      <figcaption class="figure-caption"><%= member["name"] %></figcaption>
+    </figure>
+  <% end %>
 </div>
+<div class="row no-gutters mx-n2 my-3">
+  <% @show.crew.to_a.each do |member| %>
+    <div class="col-12 col-md-6 px-2 mb-3">
+      <h5 class="mb-0"><%= member["name"] %></h5>
+      <span class="figure-caption text-uppercase"><%= member["role"] %></span>
+    </div>
+  <% end %>
+</div>
+
