@@ -1,5 +1,5 @@
-<a class="text-dark m-0 py-3 d-flex justify-content-between align-items-center" href="<%= company_link_path company.slug %>">
-  <img src="https://source.unsplash.com/featured/?logo" style="height: 40px;" class="img-fluid" alt="">
+<a class="text-dark my-3 d-flex justify-content-between align-items-center" href="<%= company_link_path company.slug %>">
+  <%= ix_image_tag(company.logo, url_params: {h: 100, ch:'Width,DPR'}, tag_options: {alt: company.name, style: 'height: 50px;'}) %>
   <h6 class="mb-0"><%= company.name %></h6>
 </a>
 

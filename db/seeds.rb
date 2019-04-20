@@ -14,7 +14,7 @@ academy = Venue.create_or_find_by! slug: 'music-academy'
 academy.update_attributes! name: 'Music Academy', area: 'TTK Road'
 
 kuku = Company.create_or_find_by! slug: 'kuku-company'
-kuku.update_attributes! name: 'The Kuku Company', rp_account: 'acc_7oRhJRK7HO4IDJ'
+kuku.update_attributes! name: 'The Kuku Company', rp_account: 'acc_7oRhJRK7HO4IDJ', logo: 'uEsMcMieHL1tZuv7'
 
 company = kuku.shows.create_or_find_by! slug: 'company'
 company.update_attributes! name: 'COMPANY', tagline: 'A Musical Comedy'
