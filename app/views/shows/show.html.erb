@@ -4,8 +4,9 @@
 <% @show.about.to_a.each do |para| %>
   <p><%= para %></p>
 <% end %>
+<a id="tickets"></a>
 <% @venue_groups.each do |venue, performances_by_venue| %>
-  <div class="row bg-gradient-light py-3">
+  <div class="row bg-gradient-light py-3 my-5">
     <h5 class="col-12 mb-0"><%= venue.name %>&nbsp;<small class="text-muted"><%= venue.area %></small>
     </h5>
     <% performances_by_venue.sort_by(&:showtime).group_by {|p| p.showtime.to_date}.each do |date, performances_by_date| %>
@@ -25,8 +26,7 @@
 
   </div>
 <% end %>
-
-
+<a id="cast"></a>
 <div class="row no-gutters mx-n2 my-3">
   <% @show.cast.to_a.each do |member| %>
     <div class="col-12 col-md-6 px-2 mb-3">
