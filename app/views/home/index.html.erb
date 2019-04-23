@@ -1,13 +1,9 @@
 <a class="text-dark my-3 d-flex justify-content-between align-items-center" href="/">
-  <h6 class="mb-0">ticketQ</h6>
+  <h1 class="mb-0">ticketQ</h1>
 </a>
-<div class="text-center mx-auto" style="max-width: 30rem;">
-  <h1 class="display-3 my-5"><a href="/">ticketQ</a></h1>
-  <h3 class="lead my-5">Ticketing - simple, fast and free.</h3>
-  <p class="my-4">ticketQ lets you sell tickets directly to your audience with no strings attached. You use your own
-    <a href="https://razorpay.com/" target="_blank">payment gateway account</a>, set your own rates, and receive your
-    money directly into your bank account.</p>
-  <p class="my-4">ticketQ does not take a commission from you, nor will we take a commission from your audience. Our
-    mission is to create a way for artists to take back control of the ticketing experience.</p>
+<div class="row">
+  <% @performance_groups.each do |key, performances| %>
+    <%= render partial: "shows/card", locals: {performances: performances, show: key.show, venue: key.venue} %>
+  <% end %>
 </div>
 

@@ -1,38 +1,6 @@
 <%= render partial: "companies/navbar", locals: { company: @company } %>
 <div class="row">
   <% @performance_groups.each do |key, performances| %>
-    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
-      <div class="card mb-4">
-        <%= responsive_image_tag key.show.poster, { w: 480, fit: 'clip' }, { class: 'card-img-top', alt: key.show.name } %>
-        <div class="card-body">
-          <h3 class="card-title"><%= key.show.name %></h3>
-          <p class="lead"><%= key.show.tagline %></p>
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item"><span class="font-weight-bold"><%= key.venue.name %></span>&nbsp;<small class="text-muted"><%= key.venue.area %></small>
-          </li>
-          <% performances.map { |p| p.showtime.to_date }.uniq.sort.tap do |dates| %>
-            <% dates.first.tap do |date| %>
-              <li class="list-group-item d-flex justify-content-between align-items-baseline">
-                <small class="text-uppercase text-muted"><%= dates.size > 1 ? 'From' : 'On' %></small>&nbsp;
-                <span><%= date.strftime("%A, #{date.day.ordinalize} %B") %></span>
-              </li>
-            <% end %>
-            <% if dates.size > 1 %>
-              <% dates.last.tap do |date| %>
-                <li class="list-group-item d-flex justify-content-between align-items-baseline">
-                  <small class="text-uppercase text-muted">To</small>
-                  <span><%= date.strftime("%A, #{date.day.ordinalize} %B") %></span>
-                </li>
-              <% end %>
-            <% end %>
-          <% end %>
-        </ul>
-        <div class="card-body p-3">
-          <a href="<%= show_venue_link_path(@company.slug, key.show.slug, key.venue.slug) %>" class="btn btn-primary text-uppercase w-100 stretched-link">Book
-            Tickets</a>
-        </div>
-      </div>
-    </div>
+    <%= render partial: "shows/card", locals: {performances: performances, show: key.show, venue: key.venue} %>
   <% end %>
 </div>
