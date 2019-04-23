@@ -2,9 +2,11 @@
   <h1 class="mb-1"><a href="<%= show_link_path show.company.slug, show.slug %>" class="text-dark"><%= show.name %></a>
   </h1>
   <p class="lead"><%= show.tagline %></p>
-  <ul class="nav justify-content-end">
-    <li class="nav-item">
-      <a class="nav-link active" href="#tickets">Tickets &darr;</a>
-    </li>
-  </ul>
+  <% if local_assigns[:nav] %>
+    <ul class="nav justify-content-end">
+      <li class="nav-item">
+        <a class="nav-link active" href="#tickets">Tickets &darr;</a>
+      </li>
+    </ul>
+  <% end %>
 </div>

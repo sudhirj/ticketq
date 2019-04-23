@@ -1,5 +1,5 @@
 <%= render partial: "companies/navbar", locals: {company: @company} %>
-<%= render partial: "shows/header", locals: {show: @show} %>
+<%= render partial: "shows/header", locals: {show: @show, nav: true} %>
 
 <% @show.about.to_a.each do |para| %>
   <p><%= para %></p>
@@ -7,7 +7,7 @@
 <a id="tickets"></a>
 <% @venue_groups.each do |venue, performances_by_venue| %>
   <div class="row bg-gradient-light py-3 my-5">
-    <h5 class="col-12 mb-0"><%= venue.name %>&nbsp;<small class="text-muted"><%= venue.area %></small>
+    <h5 class="col-12 mb-0"><%= venue.name %>&nbsp;<small class="text-muted"><%= venue.area %>&nbsp;/&nbsp;</small><small><a href="https://goo.gl/maps/38biWHgJKzAvBd2r8" target="_blank">map &rarr;</a></small>
     </h5>
     <% performances_by_venue.sort_by(&:showtime).group_by {|p| p.showtime.to_date}.each do |date, performances_by_date| %>
       <div class="col-12">
