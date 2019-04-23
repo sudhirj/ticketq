@@ -1,5 +1,5 @@
 <a class="text-dark my-3 d-flex justify-content-between align-items-center" href="<%= company_link_path company.slug %>">
-  <%=responsive_image_tag company.logo, {h: 50, fit: 'clip'}, {alt: company.name, style: 'height: 50px;'} %>
+  <%= responsive_image_tag company.logo, { h: 50, fit: 'clip' }, { alt: company.name, style: 'height: 50px;' } %>
   <h6 class="mb-0"><%= company.name %></h6>
 </a>
 
