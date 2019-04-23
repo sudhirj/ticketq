@@ -1,7 +1,10 @@
 <div class="media">
-  <a href="https://goo.gl/maps/zVWDoQpFn952" target="_blank"><img src="https://source.unsplash.com/256x256/?architecture" class="mr-3 rounded" width="80px" height="80px" alt="..."></a>
+  <a href="<%= venue.map_link %>" target="_blank">
+    <%= responsive_image_tag venue.image, {w: 80, h: 80}, {class: 'mr-3 rounded', style: 'width: 80px; height: 80px;', alt: venue.name} %>
+
+  </a>
   <div class="media-body">
     <h5 class="mt-0"><%= venue.name %></h5>
-    <span class="text-muted"><%=venue.area %></span>&nbsp;/&nbsp;<a href="https://goo.gl/maps/38biWHgJKzAvBd2r8" target="_blank">map &rarr;</a>
+    <span class="text-muted"><%= venue.area %></span>&nbsp;/&nbsp;<a href="<%= venue.map_link %>" target="_blank">map &rarr;</a>
   </div>
 </div>
