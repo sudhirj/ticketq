@@ -41,7 +41,7 @@ company.update_attributes!(
     { name: 'Hannah Elliot', role: 'Vocal Coach' },
     { name: 'Srikanth Gananasekaran', role: 'Pianist' }
   ],
-  runtime: { hours: 2, minutes: 15, intermission: true },
+  runtime: { hours: 2, minutes: 0, intermission: true },
   about: [
     'COMPANY follows Bobby, a commitment phobic 35 year old through a musical dissection of love and relationships. Aided by the advice of his 5 married couple friends, Bobby juggles the pros and cons of marriage with endearing scepticism that will have audiences laughing and nodding in recognition.',
     'There will be a Q&A session with the cast and musicians on SATURDAY & SUNDAY after the show.'
