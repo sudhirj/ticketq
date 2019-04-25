@@ -1,16 +1,19 @@
-<%= render partial: "companies/navbar", locals: {company: @company} %>
-<%= render partial: "shows/header", locals: {show: @show, nav: true} %>
+<%= render partial: "companies/navbar", locals: { company: @company } %>
+<%= render partial: "shows/header", locals: { show: @show, nav: true } %>
 
 <% @show.about.to_a.each do |para| %>
   <p><%= para %></p>
 <% end %>
 <a id="tickets"></a>
-<small class="alert alert-warning d-block my-5 mx-n3 p-3">COMPANY runs for 2 hours with an intermission. Not recommended for children under the age of 13 - contains adult themes and profanity.</small>
+<% if @show.warning.present? %>
+  <small class="alert alert-warning d-block my-5 mx-n3 p-3"><%= @show.warning %></small>
+<% end %>
 <% @venue_groups.each do |venue, performances_by_venue| %>
   <div class="row bg-gradient-light py-3 my-5 rounded">
-    <h5 class="col-12 mb-0"><%= venue.name %>&nbsp;<small class="text-muted"><%= venue.area %>&nbsp;/&nbsp;</small><small><a href="<%= venue.map_link %>" target="_blank">map &rarr;</a></small>
+    <h5 class="col-12 mb-0"><%= venue.name %>&nbsp;<small class="text-muted"><%= venue.area %>&nbsp;/&nbsp;</small>
+      <small><a href="<%= venue.map_link %>" target="_blank">map &rarr;</a></small>
     </h5>
-    <% performances_by_venue.sort_by(&:showtime).group_by {|p| p.showtime.to_date}.each do |date, performances_by_date| %>
+    <% performances_by_venue.sort_by(&:showtime).group_by { |p| p.showtime.to_date }.each do |date, performances_by_date| %>
       <div class="col-12">
         <div class="row mt-3 py-2 pl-1 border-left border-primary">
           <div class="col-12">
