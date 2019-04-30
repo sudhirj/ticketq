@@ -17,7 +17,7 @@ kuku = Company.create_or_find_by! slug: 'kuku-company'
 kuku.update_attributes! name: 'The Kuku Company', rp_account: 'acc_7oRhJRK7HO4IDJ', logo: 'uEsMcMieHL1tZuv7'
 
 company = kuku.shows.create_or_find_by! slug: 'company'
-company.update_attributes! name: 'COMPANY', tagline: 'A Musical Comedy', poster: 'JypDmVDvkhuE9E2Y'
+company.update_attributes! name: 'COMPANY', tagline: 'A Musical Comedy', poster: 'ZXo1Ku1K3dHJNPkE'
 company.update_attributes!(
   cast: [
     { name: 'Sandeep John' },
@@ -51,8 +51,8 @@ company.update_attributes!(
     'Once tickets are purchased there will be no refunds or cancellations.'
   ]
 )
-lesmis = kuku.shows.create_or_find_by! slug: 'lesmis'
-lesmis.update_attributes! name: 'Lés Miserables', tagline: 'The GLUMS!', poster: 'ZinJWAWPJswgjRqA'
+# lesmis = kuku.shows.create_or_find_by! slug: 'lesmis'
+# lesmis.update_attributes! name: 'Lés Miserables', tagline: 'The GLUMS!', poster: 'ZinJWAWPJswgjRqA'
 
 Booking.delete_all
 Allocation.delete_all
@@ -64,11 +64,11 @@ perfs << company.performances.create!(venue: museum, showtime: DateTime.parse('2
 perfs << company.performances.create!(venue: museum, showtime: DateTime.parse('2019-06-08T18:30:00+05:30'))
 perfs << company.performances.create!(venue: museum, showtime: DateTime.parse('2019-06-09T18:30:00+05:30'))
 
-perfs << lesmis.performances.create!(venue: academy, showtime: rand(100..10_000).minutes.from_now)
-perfs << lesmis.performances.create!(venue: academy, showtime: rand(100..10_000).minutes.from_now)
-perfs << lesmis.performances.create!(venue: academy, showtime: rand(100..10_000).minutes.from_now)
-perfs << lesmis.performances.create!(venue: academy, showtime: rand(100..10_000).minutes.from_now)
-perfs << lesmis.performances.create!(venue: academy, showtime: rand(100..10_000).minutes.from_now)
+# perfs << lesmis.performances.create!(venue: academy, showtime: rand(100..10_000).minutes.from_now)
+# perfs << lesmis.performances.create!(venue: academy, showtime: rand(100..10_000).minutes.from_now)
+# perfs << lesmis.performances.create!(venue: academy, showtime: rand(100..10_000).minutes.from_now)
+# perfs << lesmis.performances.create!(venue: academy, showtime: rand(100..10_000).minutes.from_now)
+# perfs << lesmis.performances.create!(venue: academy, showtime: rand(100..10_000).minutes.from_now)
 
 perfs.each do |perf|
   denoms = []
