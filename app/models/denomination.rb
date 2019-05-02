@@ -9,7 +9,7 @@ class Denomination < ApplicationRecord
   delegate :show, to: :performance
   delegate :venue, to: :performance
 
-  data_accessors :name
+  store_accessor :data, :name
 
 
   def allocated_count

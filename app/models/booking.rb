@@ -9,11 +9,10 @@ class Booking < ApplicationRecord
   delegate :performance, to: :denomination
   delegate :venue, to: :denomination
 
+  scope :confirmed, -> { where(confirmed: true) }
+  scope :blocked, -> { where(confirmed: false, active: true) }
 
-  scope :confirmed, -> {where(confirmed: true)}
-  scope :blocked, -> {where(confirmed: false, active: true)}
-
-  data_accessors :name, :mobile, :email
+  store_accessor :data, :name, :mobile, :email
 
   before_save :set_status
   after_commit :schedule_delivery_if_confirmed
@@ -27,24 +26,24 @@ class Booking < ApplicationRecord
   def ensure_rp_invoice
     resp = HTTParty.post('https://api.razorpay.com/v1/invoices',
                          body: {
-                             type: 'invoice',
-                             line_items: [
-                                 amount: denomination.price * 100,
-                                 name: denomination.name,
-                                 currency: 'INR',
-                                 quantity: count
-                             ],
-                             customer: {
-                                 name: name,
-                                 email: email,
-                                 contact: mobile
-                             },
-                             description: description,
-                             receipt: receipt_id,
-                             terms: terms,
-                             expire_by: expire_at.to_i,
-                             sms_notify: 0,
-                             email_notify: 0
+                           type: 'invoice',
+                           line_items: [
+                             amount: denomination.price * 100,
+                             name: denomination.name,
+                             currency: 'INR',
+                             quantity: count
+                           ],
+                           customer: {
+                             name: name,
+                             email: email,
+                             contact: mobile
+                           },
+                           description: description,
+                           receipt: receipt_id,
+                           terms: terms,
+                           expire_by: expire_at.to_i,
+                           sms_notify: 0,
+                           email_notify: 0
                          }.to_json,
                          headers: rp_headers,
                          basic_auth: rp_auth)
@@ -69,7 +68,7 @@ class Booking < ApplicationRecord
   end
 
   def description
-    %{#{count} #{denomination.name} #{'ticket'.pluralize(count)} for #{denomination.performance.show.name} on #{showdate_display} at #{showtime_display} at #{venue_display}.}
+    %(#{count} #{denomination.name} #{'ticket'.pluralize(count)} for #{denomination.performance.show.name} on #{showdate_display} at #{showtime_display} at #{venue_display}.)
   end
 
   def showdate_display
@@ -84,7 +83,6 @@ class Booking < ApplicationRecord
     "#{denomination.performance.venue.name} (#{denomination.performance.venue.area})"
   end
 
-
   def refresh
     return if confirmed || !active
 
@@ -96,7 +94,7 @@ class Booking < ApplicationRecord
   end
 
   def receipt_id
-    ['TQ',performance_shortcode, denom_shortcode, shortcode].join('-')
+    ['TQ', performance_shortcode, denom_shortcode, shortcode].join('-')
   end
 
   def performance_shortcode
@@ -112,8 +110,8 @@ class Booking < ApplicationRecord
   end
 
   def timecode
-    yymmddhhmm = denomination.performance.showtime.strftime('%y%m%d%H%M').to_i
-    ShortUUID.convert_decimal_to_alphabet yymmddhhmm, RECEIPT_ALPHABET.chars
+    date_format = denomination.performance.showtime.strftime('%y%m%d%H%M').to_i
+    ShortUUID.convert_decimal_to_alphabet date_format, RECEIPT_ALPHABET.chars
   end
 
   def short_id
@@ -121,13 +119,13 @@ class Booking < ApplicationRecord
   end
 
   def rp_auth
-    {username: ENV.fetch('RP_KEY_ID'), password: ENV.fetch('RP_KEY_SECRET')}
+    { username: ENV.fetch('RP_KEY_ID'), password: ENV.fetch('RP_KEY_SECRET') }
   end
 
   def rp_headers
     {
-        'Content-Type': 'application/json',
-        'x-razorpay-account': company.rp_account
+      'Content-Type': 'application/json',
+      'x-razorpay-account': company.rp_account
     }
   end
 
@@ -137,23 +135,25 @@ class Booking < ApplicationRecord
 
   def send_email
     return if email_sent || !confirmed
+
     logger.info ses.send_email(
-        destination: { to_addresses: [email] },
-        message: {
-            body: {
-                # html: { charset: 'UTF-8', data: html_message },
-                text: { charset: 'UTF-8', data: plaintext_message }
-            },
-            subject: { charset: 'UTF-8', data: "Tickets for #{show.name}" }
+      destination: { to_addresses: [email] },
+      message: {
+        body: {
+          # html: { charset: 'UTF-8', data: html_message },
+          text: { charset: 'UTF-8', data: plaintext_message }
         },
-        source: "ticketQ <tickets@ticketq.in>",
-        reply_to_addresses: ['tickets@ticketq.in']
+        subject: { charset: 'UTF-8', data: "Tickets for #{show.name}" }
+      },
+      source: 'ticketQ <tickets@ticketq.in>',
+      reply_to_addresses: ['tickets@ticketq.in']
     )
     update_attributes email_sent: true
   end
 
   def send_sms
     return if sms_sent || !confirmed
+
     logger.info sns.publish(phone_number: "+91#{mobile}".strip,
                             message: plaintext_message)
     update_attributes sms_sent: true
@@ -170,7 +170,8 @@ class Booking < ApplicationRecord
 
   def schedule_delivery_if_confirmed
     return unless confirmed
-    return unless previous_changes.keys.include? "confirmed"
+    return unless previous_changes.key?('confirmed')
+
     DeliveryJob.perform_later self
   end
 
