@@ -19,6 +19,9 @@ kuku.update_attributes! name: 'The Kuku Company', rp_account: 'acc_7oRhJRK7HO4ID
 company = kuku.shows.create_or_find_by! slug: 'company'
 company.update_attributes! name: 'COMPANY', tagline: 'A Musical Comedy', poster: 'ZXo1Ku1K3dHJNPkE'
 company.update_attributes!(
+  runtime_hours: 2,
+  runtime_minutes: 0,
+  intermission: true,
   cast: [
     { name: 'Sandeep John' },
     { name: 'Dr Yohan Chacko' },
@@ -41,7 +44,7 @@ company.update_attributes!(
     { name: 'Hannah Elliot', role: 'Vocal Coach' },
     { name: 'Srikanth Gananasekaran', role: 'Pianist' }
   ],
-  warning: 'COMPANY runs for 2 hours with an intermission. Not recommended for children under the age of 13 - contains adult themes and profanity.',
+  warning: 'COMPANY is not recommended for children under the age of 13 - contains adult themes and profanity.',
   about: [
     'COMPANY follows Bobby, a commitment phobic 35 year old through a musical dissection of love and relationships. Aided by the advice of his 5 married couple friends, Bobby juggles the pros and cons of marriage with endearing scepticism that will have audiences laughing and nodding in recognition.',
     'There will be a Q&A session with the cast and musicians on SATURDAY & SUNDAY after the show.'

@@ -6,10 +6,13 @@
 <% end %>
 <a id="tickets"></a>
 <% if @show.warning.present? %>
-  <small class="alert alert-warning d-block my-5 mx-n3 p-3"><%= @show.warning %></small>
+  <small class="d-block my-3 mx-n3 p-3 bg-gradient-light text-dark rounded">Runtime: <%= @show.runtime_display %></small>
+<% end %>
+<% if @show.warning.present? %>
+  <small class="d-block my-3 mx-n3 p-3 bg-gradient-warning text-dark rounded"><%= @show.warning %></small>
 <% end %>
 <% @venue_groups.each do |venue, performances_by_venue| %>
-  <div class="row bg-gradient-light py-3 my-5 rounded">
+  <div class="row bg-gradient-light py-3 my-3 rounded">
     <h5 class="col-12 mb-0"><%= venue.name %>&nbsp;<small class="text-muted"><%= venue.area %>&nbsp;/&nbsp;</small>
       <small><a href="<%= venue.map_link %>" target="_blank">map &rarr;</a></small>
     </h5>
