@@ -1,7 +1,8 @@
 class Show < ApplicationRecord
   belongs_to :company
   has_many :performances
-  store_accessor :data, :name, :tagline, :cast, :crew, :about, :warning, :terms, :poster, :runtime_hours, :runtime_minutes, :intermission
+  store_accessor :data, :name, :tagline, :cast, :crew, :about, :warning, :terms,
+                 :poster, :runtime_hours, :runtime_minutes, :intermission
 
   def runtime_display
     parts = []
