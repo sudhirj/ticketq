@@ -50,7 +50,8 @@ company.update_attributes!(
   ],
   terms: [
     'Please pick up tickets from the box-office 30 minutes before showtime.',
-    'Once tickets are purchased there will be no refunds or cancellations.'
+    'Once tickets are purchased there will be no refunds or cancellations.',
+    'This show contains adult themes and profanity and is not recommended for children under the age of 13.'
   ]
 )
 
