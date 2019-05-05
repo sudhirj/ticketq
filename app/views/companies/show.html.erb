@@ -1,5 +1,5 @@
 <%= render partial: "companies/navbar", locals: { company: @company } %>
-<div class="row">
+<div class="row my-3">
   <% @performance_groups.each do |key, performances| %>
     <%= render partial: "shows/card", locals: {performances: performances, show: key.show, venue: key.venue} %>
   <% end %>

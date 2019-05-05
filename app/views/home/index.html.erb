@@ -1,7 +1,7 @@
 <a class="text-dark my-3 d-flex justify-content-between align-items-center" href="/">
   <h1 class="mb-0">ticketQ</h1>
 </a>
-<div class="row">
+<div class="row my-3">
   <% @performance_groups.each do |key, performances| %>
     <%= render partial: "shows/card", locals: {performances: performances, show: key.show, venue: key.venue} %>
   <% end %>
