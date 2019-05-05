@@ -34,11 +34,11 @@
           data-invoice_id="<%= @booking.rp_data.dig('id') %>"
           data-name="<%= @booking.company.name %>"
           data-key="<%= @booking.rp_auth[:username] %>"
-          data-account_id="<%= @booking.company.rp_account %>"
           data-description="<%= @booking.description %>"
           data-amount="<%= @booking.rp_data.dig('amount') %>"
           data-turbolinks-eval="false" async defer></script>
       </form>
+<!--      data-account_id="<%#= @booking.company.rp_account %>"-->
       <p class="card-text mt-3 mb-0">
         <small class="text-muted">These tickets will be reserved for you
           until <%= @booking.expire_at.strftime('%I:%M %p') %>. If you'd like to make the payment from a different

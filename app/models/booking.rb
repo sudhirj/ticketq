@@ -125,7 +125,7 @@ class Booking < ApplicationRecord
   def rp_headers
     {
       'Content-Type': 'application/json',
-      'x-razorpay-account': company.rp_account
+      # 'x-razorpay-account': company.rp_account
     }
   end
 
