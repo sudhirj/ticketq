@@ -69,8 +69,12 @@
       </div>
     </div>
   </div>
-
-  <div class="row my-4">
+  <ul class="text-muted my-3">
+    <% @show.terms.to_a.each do |condition| %>
+      <li><%= condition %></li>
+    <% end %>
+  </ul>
+  <div class="row my-5">
     <div class="col-12">
       <button class="btn btn-success btn-lg w-100 text-uppercase" type="submit" data-disable-with="Checking Tickets...">Book
         Tickets
@@ -79,8 +83,4 @@
   </div>
 <% end %>
 
-<ul class="text-muted">
-  <% @show.terms.to_a.each do |condition| %>
-    <li><%= condition %></li>
-  <% end %>
-</ul>
+
