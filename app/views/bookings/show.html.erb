@@ -1,7 +1,7 @@
 <%= render partial: "companies/navbar", locals: {company: @booking.company} %>
 <%= render partial: "shows/header", locals: {show: @booking.show} %>
 <% if @booking.confirmed %>
-  <div class="card my-4 bg-gradient-light shadow border border-primary">
+  <div class="card my-5 bg-gradient-light shadow border border-primary">
     <div class="card-header bg-gradient-primary"><strong class="text-light">Tickets Confirmed</strong></div>
     <div class="card-body">
       <p class="card-text"><strong>
@@ -24,7 +24,7 @@
   </div>
 <% end %>
 <% if !@booking.confirmed && @booking.active %>
-  <div class="card my-4 bg-gradient-light shadow-sm border border-success">
+  <div class="card my-5 bg-gradient-light shadow-sm border border-success">
     <div class="card-header bg-gradient-success"><strong class="text-light">Tickets Available</strong></div>
     <div class="card-body">
       <%= render partial: "bookings/info", locals: { booking: @booking } %>
@@ -50,7 +50,7 @@
   </div>
 
 <% end %>
-<div class="row my-3">
+<div class="row my-5">
   <% if @booking.confirmed %>
     <div class="col-12 col-md-6 mb-3">
       <div class="media">

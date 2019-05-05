@@ -1,16 +1,16 @@
-<%= render partial: "companies/navbar", locals: {company: @company} %>
-<%= render partial: "shows/header", locals: {show: @show} %>
+<%= render partial: "companies/navbar", locals: { company: @company } %>
+<%= render partial: "shows/header", locals: { show: @show } %>
 <% if flash[:notice] %>
-  <div class="alert alert-danger my-3" role="alert">
+  <div class="alert alert-danger my-5" role="alert">
     <strong>Sorry!</strong> Your tickets could not be booked at this time. Please try again later.
   </div>
 <% end %>
-<div class="row my-3">
+<div class="row my-5">
   <div class="col-12 col-md-6 mb-3 mb-md-0">
-    <%= render partial: "media/datetime", locals: {datetime: @performance.showtime} %>
+    <%= render partial: "media/datetime", locals: { datetime: @performance.showtime } %>
   </div>
   <div class="col-12 col-md-6">
-    <%= render partial: "media/venue", locals: {venue: @performance.venue} %>
+    <%= render partial: "media/venue", locals: { venue: @performance.venue } %>
   </div>
 </div>
 
@@ -18,21 +18,22 @@
   <h5 class="my-4">Which tickets would you like?</h5>
   <div class="row no-gutters mx-n2">
     <% @performance.denominations.sort_by(&:price).reverse.each_with_index do |denom, i| %>
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3 px-2">
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 my-2 px-2">
         <div class="" style="cursor: pointer;">
           <input type="radio" id="<%= denom.id %>" name="denom"
                  <% if i == 1 %>checked
                  <% end %>  class="special" value="<%= denom.id %>">
           <label class="special" for="<%= denom.id %>"><%= denom.name %>
-            <span class="float-right font-weight-bold">₹<%= denom.price %><small> / seat</small></span></label>
+            <span class="float-right font-weight-bold">₹<%= denom.price %>
+              <small> / seat</small></span></label>
         </div>
       </div>
     <% end %>
   </div>
-  <h5 class="mb-4 mt-2">How many tickets would you like?</h5>
+  <h5 class="my-4">How many tickets would you like?</h5>
   <div class="row no-gutters mx-n2">
     <% (1..10).each_with_index do |count, i| %>
-      <div class="col-3 col-sm-2 col-lg-1 mb-3 px-2">
+      <div class="col-3 col-sm-2 col-lg-1 my-2 px-2">
         <div class="" style="cursor: pointer;">
           <input type="radio" id="<%= count %>" name="count"
                  <% if i == 1 %>checked
@@ -42,7 +43,7 @@
       </div>
     <% end %>
   </div>
-  <div class="row my-3">
+  <div class="row my-5">
     <div class="col-12 mb-2">
       <div class="input-group">
         <div class="input-group-prepend">
@@ -71,13 +72,15 @@
 
   <div class="row my-4">
     <div class="col-12">
-      <button class="btn btn-success btn-lg w-100 text-uppercase" type="submit" data-disable-with="Checking Tickets...">Book Tickets</button>
+      <button class="btn btn-success btn-lg w-100 text-uppercase" type="submit" data-disable-with="Checking Tickets...">Book
+        Tickets
+      </button>
     </div>
   </div>
 <% end %>
 
 <ul class="text-muted">
   <% @show.terms.to_a.each do |condition| %>
-  <li><%=condition %></li>
+    <li><%= condition %></li>
   <% end %>
 </ul>

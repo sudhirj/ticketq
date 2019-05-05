@@ -41,7 +41,6 @@ company.update_attributes!(
   crew: [
     { name: 'Amrita Fredrick', role: 'Director' },
     { name: 'Sangita Santosham', role: 'Vocal Director' },
-    { name: 'Hannah Elliot', role: 'Vocal Coach' },
     { name: 'Srikanth Gananasekaran', role: 'Pianist' }
   ],
   warning: 'COMPANY is not recommended for children under the age of 13 - contains adult themes and profanity.',
@@ -67,11 +66,6 @@ perfs << company.performances.create!(venue: museum, showtime: DateTime.parse('2
 perfs << company.performances.create!(venue: museum, showtime: DateTime.parse('2019-06-08T18:30:00+05:30'))
 perfs << company.performances.create!(venue: museum, showtime: DateTime.parse('2019-06-09T18:30:00+05:30'))
 
-# perfs << lesmis.performances.create!(venue: academy, showtime: rand(100..10_000).minutes.from_now)
-# perfs << lesmis.performances.create!(venue: academy, showtime: rand(100..10_000).minutes.from_now)
-# perfs << lesmis.performances.create!(venue: academy, showtime: rand(100..10_000).minutes.from_now)
-# perfs << lesmis.performances.create!(venue: academy, showtime: rand(100..10_000).minutes.from_now)
-# perfs << lesmis.performances.create!(venue: academy, showtime: rand(100..10_000).minutes.from_now)
 
 perfs.each do |perf|
   denoms = []
