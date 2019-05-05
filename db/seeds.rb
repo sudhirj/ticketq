@@ -10,8 +10,8 @@
 
 museum = Venue.create_or_find_by! slug: 'museum-theatre'
 museum.update_attributes! name: 'Museum Theatre', area: 'Egmore', map_link: 'https://goo.gl/maps/38biWHgJKzAvBd2r8', image: 'SKctLgwLjSaDSWug'
-academy = Venue.create_or_find_by! slug: 'music-academy'
-academy.update_attributes! name: 'Music Academy', area: 'TTK Road', map_link: 'https://goo.gl/maps/38biWHgJKzAvBd2r8', image: 'SKctLgwLjSaDSWug'
+# academy = Venue.create_or_find_by! slug: 'music-academy'
+# academy.update_attributes! name: 'Music Academy', area: 'TTK Road', map_link: 'https://goo.gl/maps/38biWHgJKzAvBd2r8', image: 'SKctLgwLjSaDSWug'
 
 kuku = Company.create_or_find_by! slug: 'kuku-company'
 kuku.update_attributes! name: 'The Kuku Company', rp_account: 'acc_7oRhJRK7HO4IDJ', logo: 'uEsMcMieHL1tZuv7', contact_email: 'contact@kukucompany.com'
@@ -55,23 +55,18 @@ company.update_attributes!(
   ]
 )
 
-Booking.delete_all
-Allocation.delete_all
-Denomination.delete_all
-Performance.delete_all
-
-perfs = []
-perfs << company.performances.create!(venue: museum, showtime: DateTime.parse('2019-06-07T19:30:00+05:30'))
-perfs << company.performances.create!(venue: museum, showtime: DateTime.parse('2019-06-08T18:30:00+05:30'))
-perfs << company.performances.create!(venue: museum, showtime: DateTime.parse('2019-06-09T18:30:00+05:30'))
-
-
-perfs.each do |perf|
-  denoms = []
-  denoms << perf.denominations.create!(price: 1000, name: 'Royal Stalls')
-  denoms << perf.denominations.create!(price: 500, name: 'Centre Gallery')
-  denoms << perf.denominations.create!(price: 300, name: 'Side Gallery')
-  denoms.each do |denom|
-    denom.allocations.create! count: 100
-  end
-end
+# perfs = []
+# perfs << company.performances.create!(venue: museum, showtime: DateTime.parse('2019-06-07T19:30:00+05:30'))
+# perfs << company.performances.create!(venue: museum, showtime: DateTime.parse('2019-06-08T18:30:00+05:30'))
+# perfs << company.performances.create!(venue: museum, showtime: DateTime.parse('2019-06-09T18:30:00+05:30'))
+#
+#
+# perfs.each do |perf|
+#   denoms = []
+#   denoms << perf.denominations.create!(price: 1000, name: 'Royal Stalls')
+#   denoms << perf.denominations.create!(price: 500, name: 'Centre Gallery')
+#   denoms << perf.denominations.create!(price: 300, name: 'Side Gallery')
+#   denoms.each do |denom|
+#     denom.allocations.create! count: 100
+#   end
+# end
