@@ -17,7 +17,7 @@ kuku = Company.create_or_find_by! slug: 'kuku-company'
 kuku.update_attributes! name: 'The Kuku Company', rp_account: 'acc_7oRhJRK7HO4IDJ', logo: 'uEsMcMieHL1tZuv7', contact_email: 'contact@kukucompany.com'
 
 company = kuku.shows.create_or_find_by! slug: 'company'
-company.update_attributes! name: 'COMPANY', tagline: 'A Musical Comedy', poster: 'ZXo1Ku1K3dHJNPkE'
+company.update_attributes! name: 'COMPANY', tagline: 'A Musical Comedy', poster: 'ZXo1Ku1K3dHJNPkE', logo: 'pm9URSWt2kXkxrbB'
 company.update_attributes!(
   runtime_hours: 2,
   runtime_minutes: 0,
