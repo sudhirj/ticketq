@@ -14,7 +14,7 @@ academy = Venue.create_or_find_by! slug: 'music-academy'
 academy.update_attributes! name: 'Music Academy', area: 'TTK Road', map_link: 'https://goo.gl/maps/38biWHgJKzAvBd2r8', image: 'SKctLgwLjSaDSWug'
 
 kuku = Company.create_or_find_by! slug: 'kuku-company'
-kuku.update_attributes! name: 'The Kuku Company', rp_account: 'acc_7oRhJRK7HO4IDJ', logo: 'uEsMcMieHL1tZuv7'
+kuku.update_attributes! name: 'The Kuku Company', rp_account: 'acc_7oRhJRK7HO4IDJ', logo: 'uEsMcMieHL1tZuv7', contact_email: 'contact@kukucompany.com'
 
 company = kuku.shows.create_or_find_by! slug: 'company'
 company.update_attributes! name: 'COMPANY', tagline: 'A Musical Comedy', poster: 'ZXo1Ku1K3dHJNPkE'
@@ -53,8 +53,6 @@ company.update_attributes!(
     'Once tickets are purchased there will be no refunds or cancellations.'
   ]
 )
-# lesmis = kuku.shows.create_or_find_by! slug: 'lesmis'
-# lesmis.update_attributes! name: 'Lés Miserables', tagline: 'The GLUMS!', poster: 'ZinJWAWPJswgjRqA'
 
 Booking.delete_all
 Allocation.delete_all
@@ -69,10 +67,10 @@ perfs << company.performances.create!(venue: museum, showtime: DateTime.parse('2
 
 perfs.each do |perf|
   denoms = []
-  denoms << perf.denominations.create!(price: [300, 500].sample, name: 'Gold')
-  denoms << perf.denominations.create!(price: [1500, 2500, 1000].sample, name: 'Platinum')
-  denoms << perf.denominations.create!(price: [50, 150, 750].sample, name: 'Silver')
+  denoms << perf.denominations.create!(price: 1000, name: 'Royal Stalls')
+  denoms << perf.denominations.create!(price: 500, name: 'Centre Gallery')
+  denoms << perf.denominations.create!(price: 300, name: 'Side Gallery')
   denoms.each do |denom|
-    denom.allocations.create! count: rand(100..500)
+    denom.allocations.create! count: 100
   end
 end

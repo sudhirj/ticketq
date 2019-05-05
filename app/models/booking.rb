@@ -58,9 +58,7 @@ class Booking < ApplicationRecord
   end
 
   def terms
-    %(* This invoice is valid only if paid.
-* Please pick up your tickets at the counter before the show at least 15 minutes before the show starts.
-* You don't need to print this invoice on paper, an email / SMS is enough.)
+    show.terms.to_a.join("\n")
   end
 
   def expire_at
@@ -145,8 +143,8 @@ class Booking < ApplicationRecord
         },
         subject: { charset: 'UTF-8', data: "Tickets for #{show.name}" }
       },
-      source: 'ticketQ <tickets@ticketq.in>',
-      reply_to_addresses: ['tickets@ticketq.in']
+      source: 'ticketQ <no-reply@ticketq.in>',
+      reply_to_addresses: [company.contact_email]
     )
     update_attributes email_sent: true
   end
