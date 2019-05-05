@@ -18,7 +18,7 @@
   <h5 class="my-4">Which tickets would you like?</h5>
   <div class="row no-gutters mx-n2">
     <% @performance.denominations.sort_by(&:price).reverse.each_with_index do |denom, i| %>
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3 my-2 px-2">
+      <div class="col-12 col-sm-6 col-md-6 col-lg-4 my-2 px-2">
         <div class="" style="cursor: pointer;">
           <input type="radio" id="<%= denom.id %>" name="denom"
                  <% if i == 1 %>checked
