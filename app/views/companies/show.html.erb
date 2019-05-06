@@ -1,3 +1,6 @@
+<% content_for :title do %>
+  <title><%=@company.name %> : ticketQ</title>
+<% end %>
 <%= render partial: "companies/navbar", locals: { company: @company } %>
 <div class="row my-3">
   <% @performance_groups.each do |key, performances| %>

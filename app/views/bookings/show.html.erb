@@ -1,3 +1,6 @@
+<% content_for :title do %>
+  <title>ticketQ</title>
+<% end %>
 <%= render partial: "companies/navbar", locals: {company: @booking.company} %>
 <%= render partial: "shows/header", locals: {show: @booking.show} %>
 <% if @booking.confirmed %>

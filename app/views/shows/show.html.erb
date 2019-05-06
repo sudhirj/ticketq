@@ -1,3 +1,6 @@
+<% content_for :title do %>
+  <title><%=@show.name %> by <%=@company.name %> : ticketQ</title>
+<% end %>
 <%= render partial: "companies/navbar", locals: { company: @company } %>
 <%= ix_image_tag(@show.logo, url_params: { fit: 'clip'}, tag_options: { alt: @show.name, class: 'img-fluid' }) %>
 <%= render partial: "shows/header", locals: { show: @show, nav: true } %>

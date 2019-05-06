@@ -1,3 +1,6 @@
+<% content_for :title do %>
+  <title><%=@show.name %> at <%=@performance.showtime.strftime('%I:%M %p')%> on <%=@performance.showtime.to_date.to_s(:long)%> at <%=@performance.venue.name %> by <%=@company.name %> : ticketQ</title>
+<% end %>
 <%= render partial: "companies/navbar", locals: { company: @company } %>
 <%= render partial: "shows/header", locals: { show: @show } %>
 <% if flash[:notice] %>
