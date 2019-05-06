@@ -17,7 +17,7 @@ kuku = Company.create_or_find_by! slug: 'kuku-company'
 kuku.update_attributes! name: 'The Kuku Company', rp_account: 'acc_7oRhJRK7HO4IDJ', logo: 'uEsMcMieHL1tZuv7', contact_email: 'contact@kukucompany.com'
 
 company = kuku.shows.create_or_find_by! slug: 'company'
-company.update_attributes! name: 'COMPANY', tagline: 'A Musical Comedy', poster: 'ZXo1Ku1K3dHJNPkE', logo: 'pm9URSWt2kXkxrbB'
+company.update_attributes! name: 'COMPANY', tagline: 'A Musical Comedy', poster: 'ZXo1Ku1K3dHJNPkE', logo: 'dfNk545pcpd5eSYz'
 company.update_attributes!(
   runtime_hours: 2,
   runtime_minutes: 0,
@@ -66,7 +66,4 @@ company.update_attributes!(
 #   denoms << perf.denominations.create!(price: 1000, name: 'Royal Stalls')
 #   denoms << perf.denominations.create!(price: 500, name: 'Centre Gallery')
 #   denoms << perf.denominations.create!(price: 300, name: 'Side Gallery')
-#   denoms.each do |denom|
-#     denom.allocations.create! count: 100
-#   end
 # end

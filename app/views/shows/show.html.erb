@@ -2,7 +2,7 @@
   <title><%=@show.name %> by <%=@company.name %> : ticketQ</title>
 <% end %>
 <%= render partial: "companies/navbar", locals: { company: @company } %>
-<%= ix_image_tag(@show.logo, url_params: { fit: 'clip'}, tag_options: { alt: @show.name, class: 'img-fluid', sizes: '(max-width: 320px) 320px,(max-width: 480px) 480px,(max-width: 768px) 768px,(max-width: 992px) 992px,1200px' }) %>
+<%= ix_image_tag(@show.logo, url_params: { fit: 'clip'}, tag_options: { alt: @show.name, class: 'img-fluid my-5 d-block', sizes: '(max-width: 320px) 320px,(max-width: 480px) 480px,(max-width: 768px) 768px,(max-width: 992px) 992px,1200px' }) %>
 <%= render partial: "shows/header", locals: { show: @show, nav: true } %>
 
 <% @show.about.to_a.each do |para| %>
