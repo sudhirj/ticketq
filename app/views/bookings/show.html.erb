@@ -9,7 +9,7 @@
     <div class="card-body">
       <p class="card-text"><strong>
         <span class="text-muted">Confirmation Code: </span><%= @booking.shortcode %></strong></p>
-      <%= render partial: "bookings/info", locals: { booking: @booking } %>
+      <%= render partial: "bookings/info", locals: {booking: @booking} %>
       <p class="card-text mt-3 mb-0">
         <small class="text-muted">Please use the Confirmation Code above to pick up your tickets at the venue at least
           15 minutes before the show. To avoid security complications, please carry some form of ID with the name
@@ -30,7 +30,7 @@
   <div class="card my-5 bg-gradient-light shadow-sm border border-success">
     <div class="card-header bg-gradient-success"><strong class="text-light">Tickets Available</strong></div>
     <div class="card-body">
-      <%= render partial: "bookings/info", locals: { booking: @booking } %>
+      <%= render partial: "bookings/info", locals: {booking: @booking} %>
       <form action="<%= booking_link_path(params[:receipt]) %>" method="GET" class="payment">
         <script
           src="https://checkout.razorpay.com/v1/checkout.js"
@@ -41,17 +41,23 @@
           data-amount="<%= @booking.rp_data.dig('amount') %>"
           data-turbolinks-eval="false" async defer></script>
       </form>
-<!--      data-account_id="<%#= @booking.company.rp_account %>"-->
+      <!--      data-account_id="<%#= @booking.company.rp_account %>"-->
       <p class="card-text mt-3 mb-0">
-        <small class="text-muted">These tickets will be reserved for you
-          until <%= @booking.expire_at.strftime('%I:%M %p') %>. If you'd like to make the payment from a different
-          device, you can use this link:
+        <small class="text-muted">Please finish payment within <%= time_ago_in_words(@booking.expire_at) %> to reserve
+          these tickets. If you'd like to make this payment from somewhere else, you can use this link:
           <a target="_blank" href="<%= booking_link_url @booking.receipt %>"><%= booking_link_url @booking.receipt %></a>
         </small>
       </p>
+      <p class="card-text mt-2 mb-0">
+        <small class="text-muted">If your payment gets stuck or fails, you can try again from this page - any excess
+          amount deducted from your account will be refunded automatically.
+        </small>
+      </p>
+      <p class="card-text mt-2 mb-0">
+        <small class="text-muted">You can contact us on <a href="mailto:<%=@booking.company.contact_email %>"><%= @booking.company.contact_email %></a> if there are any problems.</small>
+      </p>
     </div>
   </div>
-
 <% end %>
 <div class="row my-5">
   <% if @booking.confirmed %>
@@ -67,14 +73,15 @@
     </div>
   <% end %>
   <div class="col-12 col-md-6 mb-3">
-    <%= render partial: "media/datetime", locals: { datetime: @booking.performance.showtime } %>
+    <%= render partial: "media/datetime", locals: {datetime: @booking.performance.showtime} %>
   </div>
   <div class="col-12 col-md-6 mb-3">
-    <%= render partial: "media/venue", locals: { venue: @booking.venue } %>
+    <%= render partial: "media/venue", locals: {venue: @booking.venue} %>
   </div>
 </div>
 <% if @booking.confirmed %>
-  <p class="text-muted text-center">If you'd like to download or print a GST Invoice for your records, please <a target="_blank" href="<%=@booking.invoice_url %>">click here</a>.</p>
+  <p class="text-muted text-center">If you'd like to download or print a GST Invoice for your records, please
+    <a target="_blank" href="<%= @booking.invoice_url %>">click here</a>.</p>
 <% end %>
 
 
