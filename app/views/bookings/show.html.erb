@@ -26,6 +26,19 @@
     </div>
   </div>
 <% end %>
+<% if !@booking.confirmed && !@booking.active %>
+  <div class="card my-5 bg-gradient-light shadow border border-danger">
+    <div class="card-header bg-gradient-danger"><strong class="text-light">Expired Booking</strong></div>
+    <div class="card-body">
+      <%= render partial: "bookings/info", locals: {booking: @booking} %>
+      <p class="card-text mt-3 mb-0">
+        <small class="text-muted">This booking has expired. Please <a href="<%= show_link_path @booking.show.company.slug, @booking.show.slug %>">click here</a> to try again.
+        </small>
+      </p>
+    </div>
+
+  </div>
+<% end %>
 <% if !@booking.confirmed && @booking.active %>
   <div class="card my-5 bg-gradient-light shadow-sm border border-success">
     <div class="card-header bg-gradient-success"><strong class="text-light">Tickets Available</strong></div>
