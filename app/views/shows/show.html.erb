@@ -1,8 +1,8 @@
 <% content_for :title do %>
-  <title><%=@show.name %> by <%=@company.name %> : ticketQ</title>
+  <title><%= @show.name %> by <%= @company.name %> : ticketQ</title>
 <% end %>
 <%= render partial: "companies/navbar", locals: { company: @company } %>
-<%= ix_image_tag(@show.logo, url_params: { fit: 'clip'}, tag_options: { alt: @show.name, class: 'img-fluid my-5 d-block', sizes: '(max-width: 320px) 320px,(max-width: 480px) 480px,(max-width: 768px) 768px,(max-width: 992px) 992px,1200px' }) %>
+<%= ix_image_tag(@show.logo, url_params: { fit: 'clip' }, tag_options: { alt: @show.name, class: 'img-fluid my-5 d-block', sizes: '(max-width: 320px) 320px,(max-width: 480px) 480px,(max-width: 768px) 768px,(max-width: 992px) 992px,1200px' }) %>
 <%= render partial: "shows/header", locals: { show: @show, nav: true } %>
 
 <% @show.about.to_a.each do |para| %>
@@ -10,39 +10,40 @@
 <% end %>
 <a id="tickets"></a>
 <div class="my-5">
-<% if @show.warning.present? %>
-  <small class="d-block my-3 mx-n3 p-3 bg-gradient-light text-dark rounded">Runtime: <%= @show.runtime_display %></small>
-<% end %>
-<% if @show.warning.present? %>
-  <small class="d-block my-3 mx-n3 p-3 bg-gradient-warning text-dark rounded"><%= @show.warning %></small>
-<% end %>
-<% @venue_groups.each do |venue, performances_by_venue| %>
-  <div class="row bg-gradient-light py-3 my-3 rounded">
-    <h5 class="col-12 mb-0"><%= venue.name %>&nbsp;<small class="text-muted"><%= venue.area %>&nbsp;/&nbsp;</small>
-      <small><a href="<%= venue.map_link %>" target="_blank">map &rarr;</a></small>
-    </h5>
-    <% performances_by_venue.sort_by(&:showtime).group_by { |p| p.showtime.to_date }.each do |date, performances_by_date| %>
-      <div class="col-12 mt-3 border-top">
-        <div class="row mt-3 border-primary">
-          <div class="col-12">
-            <h6 class="mb-1"><%= date.strftime('%A').upcase %>&nbsp&nbsp;/&nbsp;<%= date.strftime("#{date.day.ordinalize} %B %Y") %></h6>
-          </div>
-          <% performances_by_date.each do |performance| %>
-            <div class="col-12 col-sm-6 col-lg-4 mt-2">
-              <a class="btn btn-primary text-uppercase w-100" href="<%= performance_link_path @company.slug, @show.slug, performance.venue.slug, performance.showtime.to_formatted_s(:iso8601) %>" role="button"><%= performance.showtime.strftime('%I:%M %p') %></a>
+  <% if @show.warning.present? %>
+    <small class="d-block my-3 mx-n3 p-3 bg-gradient-light text-dark rounded">Runtime: <%= @show.runtime_display %></small>
+  <% end %>
+  <% if @show.warning.present? %>
+    <small class="d-block my-3 mx-n3 p-3 bg-gradient-warning text-dark rounded"><%= @show.warning %></small>
+  <% end %>
+  <% @venue_groups.each do |venue, performances_by_venue| %>
+    <div class="row bg-gradient-light py-3 my-3 rounded">
+      <h5 class="col-12 mb-0"><%= venue.name %>&nbsp;<small class="text-muted"><%= venue.area %>&nbsp;/&nbsp;</small>
+        <small><a href="<%= venue.map_link %>" target="_blank">map &rarr;</a></small>
+      </h5>
+      <% performances_by_venue.sort_by(&:showtime).group_by { |p| p.showtime.to_date }.each do |date, performances_by_date| %>
+        <div class="col-12 mt-3 border-top">
+          <div class="row mt-3 border-primary">
+            <div class="col-12">
+              <h6 class="mb-1"><%= date.strftime('%A').upcase %>
+                &nbsp&nbsp;/&nbsp;<%= date.strftime("#{date.day.ordinalize} %B %Y") %></h6>
             </div>
-          <% end %>
+            <% performances_by_date.each do |performance| %>
+              <div class="col-12 col-sm-6 col-lg-4 mt-2">
+                <a class="btn btn-primary text-uppercase w-100" href="<%= performance_link_path @company.slug, @show.slug, performance.venue.slug, performance.showtime.to_formatted_s(:iso8601) %>" role="button"><%= performance.showtime.strftime('%I:%M %p') %></a>
+              </div>
+            <% end %>
+          </div>
         </div>
-      </div>
-    <% end %>
-  </div>
-<% end %>
+      <% end %>
+    </div>
+  <% end %>
 </div>
 <a id="cast"></a>
 <div class="row no-gutters mx-n2 my-5">
   <% @show.cast.to_a.each do |member| %>
     <div class="col-6 col-sm-4 col-md-3 col-lg-2 px-2 mb-3">
-      <%= ix_image_tag(member["photo"], url_params: { fit: 'facearea', facepad: '2.5'}, tag_options: { alt: member["name"], class: 'img-fluid rounded', sizes: '250px' }) %>
+      <%= responsive_image_tag member["photo"], { w: 250, fit: 'facearea', facepad: '2', h: 400 }, { alt: member["name"], class: 'img-fluid rounded' } %>
       <small class="text-uppercase text-muted"><%= member["name"] %></small>
     </div>
   <% end %>
