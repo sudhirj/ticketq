@@ -41,9 +41,9 @@
 <a id="cast"></a>
 <div class="row no-gutters mx-n2 my-5">
   <% @show.cast.to_a.each do |member| %>
-    <div class="col-12 col-md-6 px-2 mb-3">
-      <h5 class="mb-0"><%= member["name"] %></h5>
-      <small class="text-muted text-uppercase"><%= member["role"] || 'ACTING' %></small>
+    <div class="col-6 col-sm-4 col-md-3 col-lg-2 px-2 mb-3">
+      <%= ix_image_tag(member["photo"], url_params: { fit: 'facearea', facepad: '2.5'}, tag_options: { alt: member["name"], class: 'img-fluid rounded', sizes: '250px' }) %>
+      <small class="text-uppercase text-muted"><%= member["name"] %></small>
     </div>
   <% end %>
 </div>
