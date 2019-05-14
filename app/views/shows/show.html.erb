@@ -42,10 +42,10 @@
 <a id="cast"></a>
 <div class="row no-gutters mx-n2 my-5">
   <% @show.cast.to_a.each do |member| %>
-    <div class="col-6 col-sm-4 col-md-3 col-lg-2 px-2 mb-3">
-      <%= responsive_image_tag member["photo"], { w: 250, fit: 'facearea', facepad: '2', h: 400 }, { alt: member["name"], class: 'img-fluid rounded' } %>
-      <small class="text-uppercase text-muted"><%= member["name"] %></small>
-    </div>
+    <figure class="figure col-6 col-sm-4 col-md-3 col-lg-2 px-2">
+      <%= responsive_image_tag member["photo"], { w: 250, fit: 'facearea', facepad: '2', h: 400 }, { alt: member["name"], class: 'figure-img img-fluid rounded' } %>
+      <figcaption class="figure-caption text-uppercase"><%= member["name"] %></figcaption>
+    </figure>
   <% end %>
 </div>
 <div class="row no-gutters mx-n2 my-5">
