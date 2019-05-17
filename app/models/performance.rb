@@ -11,4 +11,12 @@ class Performance < ApplicationRecord
   def normalize_showtime
     self.showtime = showtime.beginning_of_minute
   end
+
+  def showdate_display
+    "#{showtime.strftime('%A')}, #{showtime.to_date.to_s(:long)}"
+  end
+
+  def showtime_display
+    showtime.strftime('%I:%M %p')
+  end
 end

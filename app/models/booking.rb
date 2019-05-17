@@ -8,6 +8,8 @@ class Booking < ApplicationRecord
   delegate :show, to: :denomination
   delegate :performance, to: :denomination
   delegate :venue, to: :denomination
+  delegate :showtime_display, to: :performance
+  delegate :showdate_display, to: :performance
 
   scope :confirmed, -> { where(confirmed: true) }
   scope :blocked, -> { where(confirmed: false, active: true) }
@@ -69,13 +71,7 @@ class Booking < ApplicationRecord
     %(#{count} #{denomination.name} #{'ticket'.pluralize(count)} for #{denomination.performance.show.name} on #{showdate_display} at #{showtime_display} at #{venue_display}.)
   end
 
-  def showdate_display
-    "#{denomination.performance.showtime.strftime('%A')}, #{denomination.performance.showtime.to_date.to_s(:long)}"
-  end
 
-  def showtime_display
-    denomination.performance.showtime.strftime('%I:%M %p')
-  end
 
   def venue_display
     "#{denomination.performance.venue.name} (#{denomination.performance.venue.area})"
@@ -158,7 +154,7 @@ class Booking < ApplicationRecord
   end
 
   def plaintext_message
-    "You have reserved and paid for #{count} #{'ticket'.pluralize(count)} in the #{denomination.name} / #{Paisa.format_with_sym(denomination.price * 100, precision: 0)} category for the performance of \"#{show.name}\" at #{showtime_display} on #{showdate_display} at #{venue_display}. Your pickup code is #{shortcode}. You can access this reservation at any time by visiting https://ticketQ.in/#{receipt}"
+    "You have reserved and paid for #{count} #{'ticket'.pluralize(count)} in the #{denomination.name} / #{denomination.display_price} category for the performance of \"#{show.name}\" at #{showtime_display} on #{showdate_display} at #{venue_display}. Your pickup code is #{shortcode}. You can access this reservation at any time by visiting https://ticketQ.in/#{receipt}"
   end
 
   def deliver

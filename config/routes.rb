@@ -15,6 +15,8 @@ Rails.application.routes.draw do
 
   end
 
+  resources :reports
+
   post '/bookings', to: 'bookings#create', as: :create_booking_link
   get '/:company_slug/:show_slug/:venue_slug/:datetime', to: 'performances#show', as: :performance_link
   get '/:company_slug/:show_slug/:venue_slug', to: 'shows#show', as: :show_venue_link

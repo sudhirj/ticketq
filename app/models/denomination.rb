@@ -24,6 +24,10 @@ class Denomination < ApplicationRecord
     bookings.where(confirmed: false, active: true).sum(:count)
   end
 
+  def display_price
+    Paisa.format_with_sym(price * 100, precision: 0)
+  end
+
   def available_count
     allocated_count - confirmed_count - blocked_count
   end
