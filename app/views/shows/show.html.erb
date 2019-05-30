@@ -25,8 +25,7 @@
         <div class="col-12 mt-3 border-top">
           <div class="row mt-3 border-primary">
             <div class="col-12">
-              <h6 class="mb-1"><%= date.strftime('%A').upcase %>
-                &nbsp&nbsp;/&nbsp;<%= date.strftime("#{date.day.ordinalize} %B %Y") %></h6>
+              <h6 class="mb-1"><%= date.strftime('%A').upcase %>&nbsp;/&nbsp;<%= date.strftime("#{date.day.ordinalize} %B %Y") %></h6>
             </div>
             <% performances_by_date.each do |performance| %>
               <div class="col-12 col-sm-6 col-lg-4 mt-2">
