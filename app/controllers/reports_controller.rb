@@ -23,10 +23,10 @@ class ReportsController < ApplicationController
         denom.bookings.confirmed.each do |booking|
           yielder << [
             booking.shortcode,
-            [booking.denomination.name, booking.denomination.display_price].join(' / '),
+            [booking.denomination.name, booking.denomination.price].join(' / '),
             booking.count,
             booking.name,
-            booking.mobile,
+            ['M', booking.mobile].join(':'),
             booking.email,
             booking.created_at.to_s
           ].to_csv
