@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Auth0ControllerTest < ActionDispatch::IntegrationTest
+class SessionTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

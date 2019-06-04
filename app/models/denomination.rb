@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Denomination < ApplicationRecord
   belongs_to :performance
 
@@ -10,7 +12,6 @@ class Denomination < ApplicationRecord
   delegate :venue, to: :performance
 
   store_accessor :data, :name
-
 
   def allocated_count
     allocations.sum(:count)
@@ -35,5 +36,4 @@ class Denomination < ApplicationRecord
   def can_book?(wanted_count)
     available_count >= wanted_count
   end
-
 end
