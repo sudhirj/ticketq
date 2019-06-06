@@ -1,5 +1,7 @@
 <% content_for :title do %>
-  <title><%=@show.name %> at <%=@performance.showtime.strftime('%I:%M %p')%> on <%=@performance.showtime.to_date.to_s(:long)%> at <%=@performance.venue.name %> by <%=@company.name %> : ticketQ</title>
+  <title><%= @show.name %> at <%= @performance.showtime.strftime('%I:%M %p') %>
+    on <%= @performance.showtime.to_date.to_s(:long) %> at <%= @performance.venue.name %> by <%= @company.name %> :
+    ticketQ</title>
 <% end %>
 <%= render partial: "companies/navbar", locals: { company: @company } %>
 <%= render partial: "shows/header", locals: { show: @show } %>
@@ -17,73 +19,78 @@
   </div>
 </div>
 
-<%= form_tag create_booking_link_path do |f| %>
-  <h5 class="my-4">Which tickets would you like?</h5>
-  <div class="row no-gutters mx-n2">
-    <% @performance.denominations.sort_by(&:price).reverse.each_with_index do |denom, i| %>
-      <div class="col-12 col-sm-6 col-md-6 col-lg-4 my-2 px-2">
-        <div class="" style="cursor: pointer;">
-          <input type="radio" id="<%= denom.id %>" name="denom"
-                 <% if i == 1 %>checked
-                 <% end %>  class="special" value="<%= denom.id %>">
-          <label class="special" for="<%= denom.id %>"><%= denom.name %>
-            <span class="float-right font-weight-bold">₹<%= denom.price %>
-              <small> / seat</small></span></label>
+<% unless @performance.closed %>
+  <%= form_tag create_booking_link_path do |f| %>
+    <h5 class="my-4">Which tickets would you like?</h5>
+    <div class="row no-gutters mx-n2">
+      <% @performance.denominations.sort_by(&:price).reverse.each_with_index do |denom, i| %>
+        <div class="col-12 col-sm-6 col-md-6 col-lg-4 my-2 px-2">
+          <div class="" style="cursor: pointer;">
+            <input type="radio" id="<%= denom.id %>" name="denom"
+                   <% if i == 1 %>checked
+                   <% end %>  class="special" value="<%= denom.id %>">
+            <label class="special" for="<%= denom.id %>"><%= denom.name %>
+              <span class="float-right font-weight-bold">₹<%= denom.price %>
+                <small> / seat</small></span></label>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <h5 class="my-4">How many tickets would you like?</h5>
+    <div class="row no-gutters mx-n2">
+      <% (1..10).each_with_index do |count, i| %>
+        <div class="col-3 col-sm-2 col-lg-1 my-2 px-2">
+          <div class="" style="cursor: pointer;">
+            <input type="radio" id="<%= count %>" name="count"
+                   <% if i == 1 %>checked
+                   <% end %>  class="special" value="<%= count %>">
+            <label class="special text-center" for="<%= count %>"><%= count %></label>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="row my-5">
+      <div class="col-12 mb-2">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <label class="input-group-text bg-gradient-light text-muted" for="name">Name:</label>
+          </div>
+          <input type="text" class="form-control" id="name" name="name" required/>
         </div>
       </div>
-    <% end %>
-  </div>
-  <h5 class="my-4">How many tickets would you like?</h5>
-  <div class="row no-gutters mx-n2">
-    <% (1..10).each_with_index do |count, i| %>
-      <div class="col-3 col-sm-2 col-lg-1 my-2 px-2">
-        <div class="" style="cursor: pointer;">
-          <input type="radio" id="<%= count %>" name="count"
-                 <% if i == 1 %>checked
-                 <% end %>  class="special" value="<%= count %>">
-          <label class="special text-center" for="<%= count %>"><%= count %></label>
+      <div class="col-12 my-2">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <label class="input-group-text bg-gradient-light text-muted" for="email">Email:</label>
+          </div>
+          <input type="email" name="email" class="form-control" required id="email"/>
         </div>
       </div>
-    <% end %>
-  </div>
-  <div class="row my-5">
-    <div class="col-12 mb-2">
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <label class="input-group-text bg-gradient-light text-muted" for="name">Name:</label>
+      <div class="col-12 mt-2">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <label class="input-group-text bg-gradient-light text-muted" for="mobile">Mobile Number:</label>
+          </div>
+          <input type="tel" class="form-control" name="mobile" maxlength="10" required id="mobile"/>
         </div>
-        <input type="text" class="form-control" id="name" name="name" required/>
       </div>
     </div>
-    <div class="col-12 my-2">
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <label class="input-group-text bg-gradient-light text-muted" for="email">Email:</label>
-        </div>
-        <input type="email" name="email" class="form-control" required id="email"/>
+    <ul class="text-muted my-3">
+      <% @show.terms.to_a.each do |condition| %>
+        <li><%= condition %></li>
+      <% end %>
+    </ul>
+    <div class="row my-5">
+      <div class="col-12">
+        <button class="btn btn-success btn-lg w-100 text-uppercase" type="submit" data-disable-with="Checking Tickets...">Book
+          Tickets
+        </button>
       </div>
     </div>
-    <div class="col-12 mt-2">
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <label class="input-group-text bg-gradient-light text-muted" for="mobile">Mobile Number:</label>
-        </div>
-        <input type="tel" class="form-control" name="mobile" maxlength="10" required id="mobile"/>
-      </div>
-    </div>
-  </div>
-  <ul class="text-muted my-3">
-    <% @show.terms.to_a.each do |condition| %>
-      <li><%= condition %></li>
-    <% end %>
-  </ul>
-  <div class="row my-5">
-    <div class="col-12">
-      <button class="btn btn-success btn-lg w-100 text-uppercase" type="submit" data-disable-with="Checking Tickets...">Book
-        Tickets
-      </button>
-    </div>
+  <% end %>
+<% end %>
+<% if @performance.closed %>
+  <div class="alert alert-warning my-5 text-center" role="alert">
+    Online ticket sales for this show have been closed - please try booking your tickets at the venue, or check the <a class="alert-link" href="<%= show_link_path @show.company.slug, @show.slug %>">other shows</a>.
   </div>
 <% end %>
-
-

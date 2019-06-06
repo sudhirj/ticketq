@@ -4,6 +4,9 @@ class Performance < ApplicationRecord
 
   delegate :company, to: :show
 
+  store_accessor :data, :closed
+
+
   has_many :denominations
 
   before_save :normalize_showtime

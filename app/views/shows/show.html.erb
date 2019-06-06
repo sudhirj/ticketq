@@ -29,11 +29,15 @@
             </div>
             <% performances_by_date.each do |performance| %>
               <div class="col-12 col-sm-6 col-lg-4 mt-2">
-                <a class="btn btn-primary text-uppercase w-100" href="<%= performance_link_path @company.slug, @show.slug, performance.venue.slug, performance.showtime.to_formatted_s(:iso8601) %>" role="button"><%= performance.showtime.strftime('%I:%M %p') %></a>
+                <a class="btn btn-primary text-uppercase w-100 <% if performance.closed %>disabled<% end %>"
+                   href="<%= performance_link_path @company.slug, @show.slug, performance.venue.slug, performance.showtime.to_formatted_s(:iso8601) %>" role="button"><%= performance.showtime.strftime('%I:%M %p') %> <% if performance.closed %>*<% end %></a>
               </div>
             <% end %>
           </div>
         </div>
+        <% if performances_by_date.any?(&:closed) %>
+          <small class="mt-2 mb-0 px-3 text-primary">* Online bookings have closed - please try booking your tickets directly at the venue.</small>
+        <% end %>
       <% end %>
     </div>
   <% end %>

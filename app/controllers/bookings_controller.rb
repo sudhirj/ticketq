@@ -3,7 +3,7 @@
 class BookingsController < ApplicationController
   def create
     denom = Denomination.find(params[:denom])
-    unless denom.can_book? count_param
+    unless denom.can_book?(count_param) && !denom.performance.closed
       flash[:notice] = 'Tickets Not Available!'
       redirect_back fallback_location: performance_link_path(denom.company.slug, denom.show.slug, denom.venue.slug, denom.performance.showtime.to_formatted_s(:iso8601))
       return
