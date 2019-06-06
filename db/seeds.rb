@@ -40,8 +40,14 @@ company.update_attributes!(
   ],
   crew: [
     { name: 'Amrita Fredrick', role: 'Director' },
-    { name: 'Sangita Santosham', role: 'Vocal Director' },
-    { name: 'Srikanth Gananasekaran', role: 'Pianist' }
+    { name: 'Sangita Santosham', role: 'Music Director' },
+  ],
+  orchestra: [
+    { name: 'Srikanth Gananasekaran', role: 'Pianist' },
+    { name: 'Murali Krishnan', role: 'Percussion' },
+    { name: 'Earl Joesph', role: 'Violin' },
+    { name: 'Keerthan Robert', role: 'Violin' },
+    { name: 'Rishabh Swaran', role: 'Keyboard' }
   ],
   warning: 'COMPANY is not recommended for children under the age of 13 - contains adult themes and profanity.',
   about: [
