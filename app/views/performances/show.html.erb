@@ -26,12 +26,20 @@
       <% @performance.denominations.sort_by(&:price).reverse.each_with_index do |denom, i| %>
         <div class="col-12 col-sm-6 col-md-6 col-lg-4 my-2 px-2">
           <div class="" style="cursor: pointer;">
-            <input type="radio" id="<%= denom.id %>" name="denom"
-                   <% if i == 1 %>checked
-                   <% end %>  class="special" value="<%= denom.id %>">
+            <input required type="radio" id="<%= denom.id %>" name="denom"
+                   class="special" value="<%= denom.id %>"
+                   <% if @denom_to_push.present? && @denom_to_push.id == denom.id %>checked<% end %>
+                   <% if denom.available_count.zero? %>disabled<% end %>/>
             <label class="special" for="<%= denom.id %>"><%= denom.name %>
               <span class="float-right font-weight-bold">₹<%= denom.price %>
-                <small> / seat</small></span></label>
+                <small> / seat</small></span>
+              <% if denom.available_count <= 10 %>
+                <small>(only <%= denom.available_count %> left)</small>
+              <% end %>
+              <% if denom.available_count.zero? %>
+                <small>(SOLD OUT)</small>
+              <% end %>
+            </label>
           </div>
         </div>
       <% end %>
@@ -91,6 +99,7 @@
 <% end %>
 <% if @performance.closed %>
   <div class="alert alert-warning my-5 text-center" role="alert">
-    Online ticket sales for this show have been closed - please try booking your tickets at the venue, or check the <a class="alert-link" href="<%= show_link_path @show.company.slug, @show.slug %>">other shows</a>.
+    Online ticket sales for this show have been closed - please try booking your tickets at the venue, or check the
+    <a class="alert-link" href="<%= show_link_path @show.company.slug, @show.slug %>">other shows</a>.
   </div>
 <% end %>
