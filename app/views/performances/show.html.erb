@@ -33,7 +33,7 @@
             <label class="special" for="<%= denom.id %>"><%= denom.name %>
               <span class="float-right font-weight-bold">₹<%= denom.price %>
                 <small> / seat</small></span>
-              <% if denom.available_count <= 10 %>
+              <% if denom.available_count > 0 && denom.available_count <= 10 %>
                 <small>(only <%= denom.available_count %> left)</small>
               <% end %>
               <% if denom.available_count.zero? %>
