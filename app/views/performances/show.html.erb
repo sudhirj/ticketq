@@ -30,7 +30,7 @@
                    class="special" value="<%= denom.id %>"
                    <% if @denom_to_push.present? && @denom_to_push.id == denom.id %>checked<% end %>
                    <% if denom.available_count.zero? %>disabled<% end %>/>
-            <label class="special" for="<%= denom.id %>"><%= denom.name %>
+            <label class="special <% if denom.available_count.zero? %>disabled<% end %>" for="<%= denom.id %>"><%= denom.name %>
               <span class="float-right font-weight-bold">₹<%= denom.price %>
                 <small> / seat</small></span>
               <% if denom.available_count > 0 && denom.available_count <= 10 %>

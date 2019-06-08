@@ -53,6 +53,9 @@ input:checked + label.special {
   @extend .border-primary;
   font-weight: bold;
 }
+label.special.disabled {
+  opacity: 0.5;
+}
 
 input.special[type="radio"] {
   display: none;
