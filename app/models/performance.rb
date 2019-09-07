@@ -6,6 +6,8 @@ class Performance < ApplicationRecord
 
   store_accessor :data, :closed
 
+  scope :active, -> { where('showtime > ?', DateTime.current + 2.hours) }
+
 
   has_many :denominations
 

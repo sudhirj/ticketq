@@ -61,15 +61,48 @@ company.update_attributes!(
   ]
 )
 
-# perfs = []
-# perfs << company.performances.create!(venue: museum, showtime: DateTime.parse('2019-06-07T19:30:00+05:30'))
-# perfs << company.performances.create!(venue: museum, showtime: DateTime.parse('2019-06-08T18:30:00+05:30'))
-# perfs << company.performances.create!(venue: museum, showtime: DateTime.parse('2019-06-09T18:30:00+05:30'))
+bw = Company.create_or_find_by! slug: 'boardwalkers'
+bw.update_attributes! name: 'Boardwalkers Theatres', rp_account: 'acc_7oRhJRK7HO4IDJ', logo: 'MMSScZxqfPpVojGR', contact_email: 'contact@kukucompany.com'
+
+ds = bw.shows.create_or_find_by! slug: 'division-street'
+ds.update_attributes! name: 'Division Street', tagline: 'A Mad Comedy', poster: 'Qubtdo8DXf6Bw6op', logo: 'M8JudyL5UjB3ykbM'
+ds.update_attributes!(
+  runtime_hours: 2,
+  runtime_minutes: 0,
+  intermission: true,
+  cast: [
+    { name: 'Sarvesh Sridhar', photo: 'genericmale' },
+    { name: 'Yohan Chacko', photo: 'FcntDnEzN5PqT4hP' },
+    { name: 'Shakila Arun', photo: 'genericmale' },
+    { name: 'Roshan Poncha', photo: 'genericmale' },
+    { name: 'Prashanth Oliver', photo: 'genericmale' },
+    { name: 'Amit Singh', photo: 'genericmale' },
+    { name: 'Sabnam Gafoor', photo: 'genericmale' },
+    { name: 'Shravan Ramakrishnan', photo: 'genericmale' }
+  ],
+  crew: [
+    { name: 'Michael Muthu', role: 'Director' }
+  ],
+  orchestra: [],
+  warning: 'The play is age restricted and meant for age groups 18 and above. The humour is adult.',
+  about: [
+    'Krish, a former political activist, comes to Chennai to start his career as a journalist. Retired from his radical life, the young man tries to get work, and is trying to forget his past life which was disastrous to say the least. Unfortunately he is photographed by the local press retching on the street after eating stuffed mutton ball curry at the Bangla Grill and Bar, owned by an immigrant from a \'neighbouring\' country, Md. Yohan, whose wife has died without leaving behind the recipes. Yohan demands an \'apple-logy\' from Krish for having given his eating place a bad name. This is just the start of Krish’s woes - Slowly through the play Krish’s life is invaded by ex-comrades and friends all who have come to rejuvenate and restart the protests and marches, and start the peoples movement all over again – Krish is horrified – but has no control over the events that transpire.'
+  ],
+  terms: [
+    'Please pick up tickets from the box office 30 minutes before showtime.',
+    'Once tickets are purchased there will be no refunds or cancellations.',
+    'This show contains adult humour and is not recommended for children under the age of 18.'
+  ]
+)
+
+perfs = []
+perfs << ds.performances.create!(venue: museum, showtime: DateTime.parse('2019-09-21T19:15:00+05:30'))
+perfs << ds.performances.create!(venue: museum, showtime: DateTime.parse('2019-09-22T19:15:00+05:30'))
 #
 #
 # perfs.each do |perf|
 #   denoms = []
-#   denoms << perf.denominations.create!(price: 1000, name: 'Royal Stalls')
-#   denoms << perf.denominations.create!(price: 500, name: 'Centre Gallery')
-#   denoms << perf.denominations.create!(price: 300, name: 'Side Gallery')
+#   denoms << perf.denominations.create!(price: 500, name: '500')
+#   denoms << perf.denominations.create!(price: 300, name: '300')
+#   denoms << perf.denominations.create!(price: 200, name: '200')
 # end

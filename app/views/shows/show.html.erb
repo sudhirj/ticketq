@@ -10,9 +10,9 @@
 <% end %>
 <a id="tickets"></a>
 <div class="my-5">
-  <% if @show.warning.present? %>
-    <small class="d-block my-3 mx-n3 p-3 bg-gradient-light text-dark rounded">Runtime: <%= @show.runtime_display %></small>
-  <% end %>
+  <%# if @show.warning.present? %>
+<!--    <small class="d-block my-3 mx-n3 p-3 bg-gradient-light text-dark rounded">Runtime: <%#= @show.runtime_display %></small>-->
+  <%# end %>
   <% if @show.warning.present? %>
     <small class="d-block my-3 mx-n3 p-3 bg-gradient-warning text-dark rounded"><%= @show.warning %></small>
   <% end %>
