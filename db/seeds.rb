@@ -62,7 +62,7 @@ company.update_attributes!(
 )
 
 bw = Company.create_or_find_by! slug: 'boardwalkers'
-bw.update_attributes! name: 'Boardwalkers Theatres', rp_account: 'acc_7oRhJRK7HO4IDJ', logo: 'MMSScZxqfPpVojGR', contact_email: 'contact@kukucompany.com'
+bw.update_attributes! name: 'Boardwalkers Theatre', rp_account: 'acc_7oRhJRK7HO4IDJ', logo: 'MMSScZxqfPpVojGR', contact_email: 'contact@kukucompany.com'
 
 ds = bw.shows.create_or_find_by! slug: 'division-street'
 ds.update_attributes! name: 'Division Street', tagline: 'A Mad Comedy', poster: 'Qubtdo8DXf6Bw6op', logo: 'M8JudyL5UjB3ykbM'
@@ -71,14 +71,14 @@ ds.update_attributes!(
   runtime_minutes: 0,
   intermission: true,
   cast: [
-    { name: 'Sarvesh Sridhar', photo: 'genericmale' },
-    { name: 'Yohan Chacko', photo: 'FcntDnEzN5PqT4hP' },
-    { name: 'Shakila Arun', photo: 'genericmale' },
-    { name: 'Roshan Poncha', photo: 'genericmale' },
-    { name: 'Prashanth Oliver', photo: 'genericmale' },
-    { name: 'Amit Singh', photo: 'genericmale' },
-    { name: 'Sabnam Gafoor', photo: 'genericmale' },
-    { name: 'Shravan Ramakrishnan', photo: 'genericmale' }
+    { name: 'Sarvesh Sridhar', photo: 'eZMXmX1Nk7UMCPc8' },
+    { name: 'Yohan Chacko', photo: 'zdZmoHinhGintUyJ' },
+    { name: 'Shakila Arun', photo: '3hH642t6QtVx4i47' },
+    { name: 'Roshan Poncha', photo: 'sWJWuJeqMjLFzPB1' },
+    { name: 'Prashanth Oliver', photo: 'CeBNMG7N3Jtxr2rW' },
+    { name: 'Amit Singh', photo: 'raWPJuZPGvmzTrek' },
+    { name: 'Sabnam Gafoor', photo: 'tqvGCwcs5EFWcBjp' },
+    { name: 'Shravan Ramakrishnan', photo: 'bqbWa5dHfRD2Men1' }
   ],
   crew: [
     { name: 'Michael Muthu', role: 'Director' }
@@ -95,9 +95,9 @@ ds.update_attributes!(
   ]
 )
 
-perfs = []
-perfs << ds.performances.create!(venue: museum, showtime: DateTime.parse('2019-09-21T19:15:00+05:30'))
-perfs << ds.performances.create!(venue: museum, showtime: DateTime.parse('2019-09-22T19:15:00+05:30'))
+# perfs = []
+# perfs << ds.performances.create!(venue: museum, showtime: DateTime.parse('2019-09-21T19:15:00+05:30'))
+# perfs << ds.performances.create!(venue: museum, showtime: DateTime.parse('2019-09-22T19:15:00+05:30'))
 #
 #
 # perfs.each do |perf|
